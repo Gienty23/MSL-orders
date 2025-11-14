@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>预订单页面示例</title>
+  <title>MSL 预订单</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
@@ -12,120 +12,170 @@
       background: #f5f5f5;
     }
     .container {
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
       background: #fff;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      border-radius: 16px;
+      padding: 20px 18px 28px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
     }
-    h1, h2 {
-      margin-top: 0;
+    h1 {
+      margin: 0 0 4px;
+      font-size: 24px;
+    }
+    .sub-title {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 16px;
+    }
+    h2 {
+      font-size: 18px;
+      margin: 0 0 8px;
     }
     .section {
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       padding-bottom: 16px;
       border-bottom: 1px solid #eee;
     }
     .section:last-child {
       border-bottom: none;
       padding-bottom: 0;
+      margin-bottom: 0;
     }
     label {
       display: block;
       margin-bottom: 6px;
       font-weight: 600;
+      font-size: 14px;
     }
     input[type="date"],
+    input[type="time"],
     input[type="text"],
     input[type="tel"],
     textarea {
       width: 100%;
       padding: 8px 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
       box-sizing: border-box;
       font-size: 14px;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #f97316;
+      box-shadow: 0 0 0 1px rgba(249,115,22,0.3);
     }
     textarea {
       resize: vertical;
       min-height: 60px;
     }
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
     .menu-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       grid-gap: 12px;
     }
     .menu-item {
-      border: 1px solid #eee;
-      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
       padding: 10px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      background: #fcfcfc;
     }
     .menu-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     .menu-name {
       font-weight: 600;
+      font-size: 14px;
     }
     .menu-price {
       color: #e67e22;
       font-weight: 600;
+      font-size: 14px;
     }
-    .menu-code {
-      font-size: 12px;
-      color: #999;
+    .menu-category {
+      font-size: 11px;
+      color: #9ca3af;
       margin-bottom: 4px;
-    }
-    .menu-img {
-      width: 100%;
-      height: 120px;
-      background: #ddd;
-      border-radius: 8px;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      color: #666;
     }
     .qty-row {
       display: flex;
       align-items: center;
-      margin-top: 4px;
+      margin-top: 6px;
+      font-size: 13px;
+      justify-content: space-between;
+      gap: 8px;
     }
     .qty-row input[type="number"] {
-      width: 70px;
+      width: 80px;
       padding: 4px 6px;
-      margin-left: 8px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+    }
+    .spicy-row {
+      display: flex;
+      align-items: center;
+      margin-top: 6px;
+      font-size: 13px;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .spicy-row select {
+      flex: 1;
+      padding: 4px 6px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      font-size: 13px;
+    }
+    .hint {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 4px;
     }
     .btn {
       display: inline-block;
-      padding: 10px 18px;
+      padding: 11px 20px;
       border: none;
       border-radius: 999px;
       font-size: 15px;
       cursor: pointer;
-      background: #ff6b35;
+      background: linear-gradient(135deg, #fb923c, #ef4444);
       color: #fff;
       font-weight: 600;
       text-align: center;
+      box-shadow: 0 8px 18px rgba(248,113,113,0.35);
+    }
+    .btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 4px 10px rgba(248,113,113,0.35);
     }
     .btn:disabled {
       opacity: 0.6;
       cursor: not-allowed;
+      box-shadow: none;
+    }
+    .error {
+      color: #b91c1c;
+      font-size: 13px;
+      margin-top: 8px;
     }
     .result-box {
       background: #f9fafb;
-      border-radius: 10px;
-      padding: 14px;
+      border-radius: 12px;
+      padding: 14px 14px 10px;
       border: 1px solid #e5e7eb;
-      margin-top: 10px;
+      margin-top: 14px;
+      font-size: 14px;
     }
     .result-row {
       margin-bottom: 6px;
@@ -146,70 +196,115 @@
       margin: 4px 0 0;
       padding-left: 20px;
     }
-    .error {
-      color: #b91c1c;
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: #fef3c7;
+      color: #92400e;
+      margin-left: 6px;
+    }
+    .group-title {
       font-size: 13px;
-      margin-top: 6px;
+      font-weight: 600;
+      margin: 10px 0 4px;
+      color: #4b5563;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>线上预订单（示例）</h1>
+    <h1>MSL 预订单</h1>
+    <div class="sub-title">
+      请选择取餐日期与菜品，提交后根据页面提示完成 EMT 支付。
+    </div>
 
-    <!-- 选择日期 + 基本信息 -->
+    <!-- 1. 取餐信息 -->
     <div class="section">
-      <h2>1. 选择取餐日期 & 联系方式</h2>
-      <div style="margin-bottom: 12px;">
-        <label for="orderDate">取餐日期（必填）</label>
-        <input type="date" id="orderDate">
-      </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+      <h2>1. 取餐信息</h2>
+      <div class="two-col">
         <div>
-          <label for="customerName">姓名（可选）</label>
-          <input type="text" id="customerName" placeholder="例如：张三">
+          <label for="orderDate">取餐日期（必填）</label>
+          <input type="date" id="orderDate">
+          <div class="hint">请选择您计划取餐的日期。</div>
         </div>
         <div>
-          <label for="customerPhone">联系电话（可选）</label>
+          <label for="pickupTime">取餐时间（可选）</label>
+          <input type="time" id="pickupTime">
+          <div class="hint">例如：18:30，如有变动以客服通知为准。</div>
+        </div>
+      </div>
+      <div class="two-col" style="margin-top: 12px;">
+        <div>
+          <label for="customerName">昵称（必填）</label>
+          <input type="text" id="customerName" placeholder="例如：小王 / 小红">
+        </div>
+        <div>
+          <label for="customerPhone">联系电话（可选，方便现场联系）</label>
           <input type="tel" id="customerPhone" placeholder="例如：647-000-0000">
         </div>
       </div>
+      <div style="margin-top: 12px;">
+        <label for="wechatId">微信号（必填，方便与客服沟通）</label>
+        <input type="text" id="wechatId" placeholder="请输入常用微信号">
+      </div>
     </div>
 
-    <!-- 菜单选择 -->
+    <!-- 2. 菜单选择 -->
     <div class="section">
-      <h2>2. 选择盖饭数量</h2>
-      <div class="menu-list" id="menuList"></div>
+      <h2>2. 选择菜品与数量</h2>
+      <div class="hint">
+        所有菜品均可选择辣度（不辣 / 正常辣 / 加辣）。饮料仅选择数量即可。
+      </div>
+      <div id="group-fan" class="group-title">盖饭类</div>
+      <div class="menu-list" id="menuListMain"></div>
+
+      <div id="group-friedrice" class="group-title">炒饭类</div>
+      <div class="menu-list" id="menuListRice"></div>
+
+      <div id="group-snack" class="group-title">小食</div>
+      <div class="menu-list" id="menuListSnack"></div>
+
+      <div id="group-drinks" class="group-title">饮料</div>
+      <div class="menu-list" id="menuListDrinks"></div>
     </div>
 
-    <!-- 备注 -->
+    <!-- 3. 备注 -->
     <div class="section">
       <h2>3. 备注特殊要求</h2>
       <label for="remark">备注</label>
-      <textarea id="remark" placeholder="例如：少辣/不要香菜/饭多一点等"></textarea>
+      <textarea id="remark" placeholder="例如：米饭少一点 / 不要花生 / 各份分开打包等"></textarea>
     </div>
 
-    <!-- 提交按钮 -->
+    <!-- 4. 提交 & 结果 -->
     <div class="section">
       <button class="btn" id="submitBtn">提交订单</button>
       <div class="error" id="errorMsg" style="display:none;"></div>
 
-      <!-- 结果展示 -->
       <div id="result" style="display:none;" class="result-box">
         <div class="result-row">
-          ✅ 订单提交成功！
+          ✅ 订单提交成功！<span class="badge">请在 30 分钟内完成 EMT</span>
         </div>
         <div class="result-row">
           订单号：<span class="highlight" id="orderNo"></span>
         </div>
         <div class="result-row">
-          总金额：<span class="highlight" id="totalAmount"></span>
+          取餐日期：<span class="highlight" id="orderDateShow"></span>
+          <span id="pickupTimeShowWrapper" style="display:none;"> ｜ 取餐时间：<span class="highlight" id="pickupTimeShow"></span></span>
         </div>
         <div class="result-row">
+          订单总金额：<span class="highlight" id="totalAmount"></span>
+        </div>
+        <div class="result-row">
+          <!-- TODO：改成你的 EMT 邮箱 -->
           请 EMT 至：<span class="highlight" id="emtEmail">your-emt-email@example.com</span>
         </div>
         <div class="result-row small">
-          👉 请在 EMT 备注中填写订单号：<span class="highlight" id="orderNoForEmt"></span>
+          👉 EMT 备注请填写订单号：<span class="highlight" id="orderNoForEmt"></span>
+        </div>
+        <div class="result-row small">
+          ⚠️ 订单仅在本店收到 EMT 付款并通过微信 / 电话与您确认后才视为有效。如 30 分钟内未付款，预订单将自动作废。
         </div>
         <div class="items-summary">
           <div>本单菜品：</div>
@@ -220,50 +315,95 @@
   </div>
 
   <script>
-    // ------------------------
-    // 1. 菜单数据（你可以在这里改名字和价格）
-    // ------------------------
+    // ================================
+    // 菜单数据
+    // ================================
+    // spicy: true 表示可以选择辣度；false 表示饮料等不选辣度
     const menuItems = [
-      { id: 1, code: 'A', name: '麻辣鸡腿盖饭', price: 12.99 },
-      { id: 2, code: 'B', name: '回锅肉盖饭',   price: 13.99 },
-      { id: 3, code: 'C', name: '鱼香肉丝盖饭', price: 12.49 },
-      { id: 4, code: 'D', name: '宫保鸡丁盖饭', price: 13.49 },
-      { id: 5, code: 'E', name: '麻婆豆腐盖饭', price: 11.99 }
+      // 盖饭类
+      { id: 1, category: 'fan', name: '孟获番茄蛋盖饭', price: 14.99, spicy: true },
+      { id: 2, category: 'fan', name: '宫保鸡丁盖饭', price: 15.99, spicy: true },
+      { id: 3, category: 'fan', name: '农家小炒肉盖饭', price: 15.99, spicy: true },
+      { id: 4, category: 'fan', name: '酸豆角鸡杂盖饭', price: 16.99, spicy: true },
+      { id: 5, category: 'fan', name: '酸豆角肉沫盖饭', price: 16.99, spicy: true },
+      { id: 6, category: 'fan', name: '乌笋小炒肉盖饭', price: 16.99, spicy: true },
+      { id: 7, category: 'fan', name: '鱼香茄子盖饭', price: 14.99, spicy: true },
+      { id: 8, category: 'fan', name: '尖椒肥肠盖饭', price: 15.99, spicy: true },
+      { id: 9, category: 'fan', name: '糖醋鱼柳盖饭', price: 15.99, spicy: true },
+      { id: 10, category: 'fan', name: '金汤酸菜比豆腐嫩的鱼+米饭', price: 17.99, spicy: true },
+      { id: 11, category: 'fan', name: '金汤酸菜肥牛+米饭', price: 17.99, spicy: true },
+
+      // 炒饭类
+      { id: 12, category: 'friedrice', name: '蒜薹腊肉炒饭', price: 13.00, spicy: true },
+      { id: 13, category: 'friedrice', name: '那一年蛋炒饭', price: 13.00, spicy: true },
+      { id: 14, category: 'friedrice', name: '菠萝鸡粒炒饭', price: 13.00, spicy: true },
+
+      // 小食
+      { id: 15, category: 'snack', name: '凉拌土豆丝（小份）+ 任意 POP', price: 2.69, spicy: true },
+
+      // 饮料
+      { id: 16, category: 'drinks', name: '可乐', price: 1.99, spicy: false },
+      { id: 17, category: 'drinks', name: '无糖可乐', price: 1.99, spicy: false },
+      { id: 18, category: 'drinks', name: '雪碧', price: 1.99, spicy: false },
+      { id: 19, category: 'drinks', name: 'Canada Dry', price: 1.99, spicy: false },
+      { id: 20, category: 'drinks', name: '康师傅冰红茶', price: 3.50, spicy: false }
     ];
 
-    const menuListEl = document.getElementById('menuList');
+    // TODO：改成你的真实 EMT 邮箱
+    const EMT_EMAIL = "corinna29@live.ca";
 
-    // 渲染菜单
-    function renderMenu() {
-      menuListEl.innerHTML = '';
-      menuItems.forEach(item => {
+    const menuListMainEl = document.getElementById('menuListMain');
+    const menuListRiceEl = document.getElementById('menuListRice');
+    const menuListSnackEl = document.getElementById('menuListSnack');
+    const menuListDrinksEl = document.getElementById('menuListDrinks');
+
+    function renderMenuForCategory(category, containerEl) {
+      containerEl.innerHTML = '';
+      menuItems.filter(item => item.category === category).forEach(item => {
         const div = document.createElement('div');
         div.className = 'menu-item';
+
+        const spicyHtml = item.spicy ? `
+          <div class="spicy-row">
+            <span>辣度：</span>
+            <select data-spicy-id="${item.id}">
+              <option value="不辣">不辣</option>
+              <option value="正常辣" selected>正常辣</option>
+              <option value="加辣">加辣</option>
+            </select>
+          </div>
+        ` : '';
+
         div.innerHTML = `
           <div>
-            <div class="menu-code">编号：${item.code}</div>
-            <div class="menu-img">图片占位（可换成真实图片）</div>
             <div class="menu-header">
               <div class="menu-name">${item.name}</div>
-              <div class="menu-price">$${item.price.toFixed(2)}</div>
+              <div class="menu-price">CAD $${item.price.toFixed(2)}</div>
             </div>
           </div>
           <div class="qty-row">
-            <span>数量：</span>
-            <input type="number" min="0" value="0" data-id="${item.id}">
+            <span>数量（份）：</span>
+            <input type="number" min="0" max="20" value="0" data-id="${item.id}">
           </div>
+          ${spicyHtml}
         `;
-        menuListEl.appendChild(div);
+        containerEl.appendChild(div);
       });
     }
 
-    renderMenu();
+    function renderAllMenus() {
+      renderMenuForCategory('fan', menuListMainEl);
+      renderMenuForCategory('friedrice', menuListRiceEl);
+      renderMenuForCategory('snack', menuListSnackEl);
+      renderMenuForCategory('drinks', menuListDrinksEl);
+    }
 
-    // 默认日期设为明天（可改为今天）
+    renderAllMenus();
+
+    // 默认日期设为明天（暂时先保留这个逻辑）
     (function setDefaultDate() {
       const dateInput = document.getElementById('orderDate');
       const d = new Date();
-      // 明天
       d.setDate(d.getDate() + 1);
       const yyyy = d.getFullYear();
       const mm = String(d.getMonth() + 1).padStart(2, '0');
@@ -271,9 +411,9 @@
       dateInput.value = `${yyyy}-${mm}-${dd}`;
     })();
 
-    // ------------------------
-    // 2. 订单提交逻辑
-    // ------------------------
+    // ================================
+    // 提交订单逻辑
+    // ================================
     const submitBtn = document.getElementById('submitBtn');
     const errorMsg = document.getElementById('errorMsg');
     const resultBox = document.getElementById('result');
@@ -281,19 +421,42 @@
     const orderNoForEmtEl = document.getElementById('orderNoForEmt');
     const totalAmountEl = document.getElementById('totalAmount');
     const itemsSummaryEl = document.getElementById('itemsSummary');
+    const orderDateShowEl = document.getElementById('orderDateShow');
+    const pickupTimeShowWrapper = document.getElementById('pickupTimeShowWrapper');
+    const pickupTimeShowEl = document.getElementById('pickupTimeShow');
+    const emtEmailEl = document.getElementById('emtEmail');
+
+    emtEmailEl.textContent = EMT_EMAIL;
 
     submitBtn.addEventListener('click', function () {
       errorMsg.style.display = 'none';
       resultBox.style.display = 'none';
 
       const orderDate = document.getElementById('orderDate').value;
+      const pickupTime = document.getElementById('pickupTime').value;
+      const nickName = document.getElementById('customerName').value.trim();
+      const phone = document.getElementById('customerPhone').value.trim();
+      const wechatId = document.getElementById('wechatId').value.trim();
+
       if (!orderDate) {
-        showError('请选择取餐日期');
-        return;
+        return showError('请选择取餐日期');
       }
 
-      // 读取数量
-      const qtyInputs = menuListEl.querySelectorAll('input[type="number"]');
+      const todayStr = new Date().toISOString().slice(0,10);
+      if (orderDate < todayStr) {
+        return showError('取餐日期不能早于今天');
+      }
+
+      if (!nickName) {
+        return showError('请填写昵称');
+      }
+
+      if (!wechatId) {
+        return showError('请填写微信号，方便与客服沟通');
+      }
+
+      // 读取所有数量
+      const qtyInputs = document.querySelectorAll('input[type="number"][data-id]');
       let hasItem = false;
       let total = 0;
       const orderedItems = [];
@@ -306,23 +469,30 @@
           if (item) {
             hasItem = true;
             const itemTotal = item.price * qty;
+
+            let spicyLevel = '';
+            if (item.spicy) {
+              const spicySelect = document.querySelector(`select[data-spicy-id="${item.id}"]`);
+              spicyLevel = spicySelect ? spicySelect.value : '';
+            }
+
             total += itemTotal;
             orderedItems.push({
               ...item,
               quantity: qty,
-              itemTotal
+              itemTotal,
+              spicyLevel
             });
           }
         }
       });
 
       if (!hasItem) {
-        showError('请至少选择一个菜品的数量');
-        return;
+        return showError('请至少选择一个菜品或饮料的数量');
       }
 
-      // 生成订单号（本地版，用 localStorage 模拟）
-      const dateStr = orderDate.replace(/-/g, ''); // 2025-11-15 -> 20251115
+      // 生成订单号（本地：日期 + 当日序号）
+      const dateStr = orderDate.replace(/-/g, '');
       const key = 'orderCount_' + dateStr;
       const prevCount = parseInt(localStorage.getItem(key) || '0', 10);
       const seq = prevCount + 1;
@@ -330,20 +500,30 @@
       const seqStr = String(seq).padStart(2, '0');
       const orderNo = `${dateStr}-${seqStr}`;
 
-      // 显示结果
+      // 展示结果
       orderNoEl.textContent = orderNo;
       orderNoForEmtEl.textContent = orderNo;
-      totalAmountEl.textContent = '$' + total.toFixed(2);
+      totalAmountEl.textContent = 'CAD $' + total.toFixed(2);
+      orderDateShowEl.textContent = orderDate;
+      if (pickupTime) {
+        pickupTimeShowWrapper.style.display = 'inline';
+        pickupTimeShowEl.textContent = pickupTime;
+      } else {
+        pickupTimeShowWrapper.style.display = 'none';
+      }
 
-      // 菜品摘要
       itemsSummaryEl.innerHTML = '';
       orderedItems.forEach(item => {
         const li = document.createElement('li');
-        li.textContent = `${item.code} - ${item.name} x ${item.quantity} = $${item.itemTotal.toFixed(2)}`;
+        const spicyText = item.spicy ? `（${item.spicyLevel}）` : '';
+        li.textContent = `${item.name}${spicyText} × ${item.quantity} = CAD $${item.itemTotal.toFixed(2)}`;
         itemsSummaryEl.appendChild(li);
       });
 
       resultBox.style.display = 'block';
+
+      // 未来如果要写入 Google Sheet / 后端，可以在这里组装 payload 发送
+      // const payload = { orderNo, orderDate, pickupTime, nickName, phone, wechatId, total, items: orderedItems };
     });
 
     function showError(msg) {
