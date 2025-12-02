@@ -547,186 +547,106 @@
     // imageUrl 将来可加图片地址
     // ================================
     const menuItems = [
-      // 🍱 三格便当类（主菜 + 番茄炒蛋 + 米饭）
-      {
-        id: 1,
-        category: 'bento',
-        name: '农家小炒肉 + 西红柿鸡蛋',
-        price: 16.99,
-        spicy: true,
-        kcal: 833,
-        desc: 'Pork, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: ''
-      },
-      {
-        id: 2,
-        category: 'bento',
-        name: '宫保鸡丁 + 西红柿鸡蛋',
-        price: 16.99,
-        spicy: true,
-        kcal: 815,
-        desc: 'Chicken, Peanuts, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: ''
-      },
-      {
-        id: 3,
-        category: 'bento',
-        name: '鱼香茄子 + 西红柿鸡蛋',
-        price: 15.99,
-        spicy: true,
-        kcal: 720,
-        desc: 'Eggplant, Wood Ear Mushroom, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: ''
-      },
-      {
-        id: 4,
-        category: 'bento',
-        name: '川椒鸡翅 + 西红柿鸡蛋',
-        price: 18.99,
-        spicy: true,
-        kcal: 850,
-        desc: 'Chicken Wings, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: ''
-      },
-      {
-        id: 5,
-        category: 'bento',
-        name: '尖椒肥肠 + 西红柿鸡蛋',
-        price: 16.99,
-        spicy: true,
-        kcal: 820,
-        desc: 'Pork Intestine, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: ''
-      },
-      {
-        id: 6,
-        category: 'bento',
-        name: '酸豆角炒肉末 + 西红柿鸡蛋',
-        price: 17.99,
-        spicy: true,
-        kcal: 738,
-        desc: 'Minced Pork, Pickled Green Beans, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: ''
-      },
-      {
-        id: 7,
-        category: 'bento',
-        name: '洋葱肥牛 + 西红柿鸡蛋',
-        price: 18.99,
-        spicy: true,
-        kcal: 890,
-        desc: 'Beef Slices, Onion, Mixed Vegetables, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: ''
-      },
-      {
-        id: 8,
-        category: 'bento',
-        name: '肉食主义 + 西红柿鸡蛋',
-        price: 18.99,
-        spicy: true,
-        kcal: 910,
-        desc: 'Meat Balls, Pork Intestine, Spam, Beef Tripe, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: ''
-      },
-      {
-        id: 9,
-        category: 'bento',
-        name: '香辣四喜 + 西红柿鸡蛋',
-        price: 18.99,
-        spicy: true,
-        kcal: 810,
-        desc: 'Shrimp, Pork Rib, Beef Sirloin, Lamb Cube, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: ''
-      },
-      {
-        id: 10,
-        category: 'bento',
-        name: '糖醋鱼柳 + 西红柿鸡蛋',
-        price: 16.99,
-        spicy: true,
-        kcal: 750,
-        desc: 'Fried Fish Fillet, Sweet & Sour Sauce, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: ''
-      },
-      {
-        id: 11,
-        category: 'bento',
-        name: '麻婆豆腐 + 西红柿鸡蛋',
-        price: 15.99,
-        spicy: true,
-        kcal: 719,
-        desc: 'Minced Pork, Tofu, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: ''
-      },
+  // 🍱 三格便当类（主菜 + 番茄炒蛋 + 米饭）
+  {
+    id: 1,
+    category: 'bento',
+    name: '农家小炒肉 + 西红柿鸡蛋',
+    price: 16.99,
+    spicy: true,
+    kcal: 833,
+    desc: 'Pork, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+    imageUrl: './images/农家小炒肉.png'
+  },
+  {
+    id: 2,
+    category: 'bento',
+    name: '宫保鸡丁 + 西红柿鸡蛋',
+    price: 16.99,
+    spicy: true,
+    kcal: 815,
+    desc: 'Chicken, Peanuts, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+    imageUrl: './images/宫保鸡丁.png'
+  },
+  {
+    id: 3,
+    category: 'bento',
+    name: '鱼香茄子 + 西红柿鸡蛋',
+    price: 15.99,
+    spicy: true,
+    kcal: 720,
+    desc: 'Eggplant, Wood Ear Mushroom, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+    imageUrl: './images/鱼香茄子.png'
+  },
+  {
+    id: 4,
+    category: 'bento',
+    name: '川椒鸡翅 + 西红柿鸡蛋',
+    price: 18.99,
+    spicy: true,
+    kcal: 850,
+    desc: 'Chicken Wings, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+    imageUrl: './images/川椒鸡翅.png'
+  },
+  {
+    id: 5,
+    category: 'bento',
+    name: '尖椒肥肠 + 西红柿鸡蛋',
+    price: 16.99,
+    spicy: true,
+    kcal: 820,
+    desc: 'Pork Intestine, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+    imageUrl: './images/尖椒小炒肉.png'
+  },
+  {
+    id: 6,
+    category: 'bento',
+    name: '酸豆角炒肉末 + 西红柿鸡蛋',
+    price: 17.99,
+    spicy: true,
+    kcal: 738,
+    desc: 'Minced Pork, Pickled Green Beans, Tomatoes & Eggs, Rice, etc.',
+    imageUrl: './images/酸豆角肉沫.png'
+  },
+  {
+    id: 7,
+    category: 'bento',
+    name: '洋葱肥牛 + 西红柿鸡蛋',
+    price: 18.99,
+    spicy: true,
+    kcal: 890,
+    desc: 'Beef Slices, Onion, Mixed Vegetables, Tomatoes & Eggs, Rice, etc.',
+    imageUrl: './images/金汤酸菜肥牛.png'   // 你未提供洋葱肥牛图片，我暂时用这个
+  },
+  {
+    id: 8,
+    category: 'bento',
+    name: '肉食主义 + 西红柿鸡蛋',
+    price: 18.99,
+    spicy: true,
+    kcal: 910,
+    desc: 'Meat Balls, Pork Intestine, Spam, Beef Tripe, Tomatoes & Eggs, Rice, etc.',
+    imageUrl: './images/麻婆豆腐.png'    // 没对应图片，暂时放占位
+  },
+  {
+    id: 9,
+    category: 'bento',
+    name: '香辣四喜 + 西红柿鸡蛋',
+    price: 18.99,
+    spicy: true,
+    kcal: 810,
+    desc: 'Shrimp, Pork Rib, Beef Sirloin, Lamb Cube, Tomatoes & Eggs, Rice, etc.',
+    imageUrl: './images/乌筍小炒肉.png'  // 你未提供香辣四喜的图，我用这个暂放
+  },
+  {
+    id: 10,
+    category: 'bento',
+    name: '糖醋鱼柳 + 西红柿鸡蛋',
+    price: 16.99,
+    spicy: true,
+    kcal: 750,
+    desc: 'Fried Fish Fillet, Sweet & Sour Sauce, Tomatoes & Eggs, Ric
 
-      // 🍲 金汤系列（汤锅 + 米饭）
-      {
-        id: 12,
-        category: 'golden',
-        name: '金汤酸菜鱼 + 米饭',
-        price: 18.49,
-        spicy: true,
-        kcal: 860,
-        desc: 'Fish Fillet, Enoki Mushroom, Glass Noodles, Golden Pickled Cabbage Soup, Rice, etc.',
-        imageUrl: ''
-      },
-      {
-        id: 13,
-        category: 'golden',
-        name: '金汤酸菜肥牛 + 米饭',
-        price: 18.49,
-        spicy: true,
-        kcal: 870,
-        desc: 'Beef Slices, Enoki Mushroom, Glass Noodles, Golden Pickled Cabbage Soup, Rice, etc.',
-        imageUrl: ''
-      },
-
-      // 🍛 炒饭套餐（炒饭 + 汤）
-      {
-        id: 14,
-        category: 'fried',
-        name: '咖喱牛肉炒饭 + 冬瓜虾仁汤',
-        price: 16.0,
-        spicy: true,
-        kcal: 854,
-        desc: 'Curry Beef Fried Rice + Winter Melon Shrimp Soup.',
-        imageUrl: ''
-      },
-      {
-        id: 15,
-        category: 'fried',
-        name: '那一年蛋炒饭 + 冬瓜虾仁汤',
-        price: 16.0,
-        spicy: true,
-        kcal: 754,
-        desc: 'Classic Fried Rice + Winter Melon Shrimp Soup.',
-        imageUrl: ''
-      },
-
-      // 🥗 小食 / 加购
-      {
-        id: 16,
-        category: 'side',
-        name: '凉拌土豆丝 + POP',
-        price: 3.0,
-        spicy: true,
-        kcal: 430,
-        desc: 'Shredded Potatoes, Chili Peppers, Green Onions, soft drink, etc.',
-        imageUrl: ''
-      },
-
-      // 🍲 汤类（单点）
-      {
-        id: 17,
-        category: 'soup',
-        name: '冬瓜虾仁汤（12oz）',
-        price: 3.99,
-        spicy: false,
-        kcal: 94,
-        desc: 'Winter Melon & Shrimp Soup.',
-        imageUrl: ''
-      }
-    ];
 
     // TODO：改成你的真实 EMT 邮箱
     const EMT_EMAIL = "your-emt-email@example.com";
@@ -951,5 +871,6 @@
   </script>
 </body>
 </html>
+
 
 
