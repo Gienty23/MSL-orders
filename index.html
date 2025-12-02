@@ -398,7 +398,6 @@
 <body>
   <div class="page-wrap">
     <div class="container">
-      <!-- 顶部 LOGO + 文案 -->
       <div class="header">
         <div class="logo-wrap">
           <div class="logo-inner">MSL</div>
@@ -416,7 +415,6 @@
         </div>
       </div>
 
-      <!-- 1. 取餐信息 -->
       <div class="section">
         <div class="step-tag">
           <div class="step-circle">1</div> 填写取餐信息
@@ -450,7 +448,6 @@
         </div>
       </div>
 
-      <!-- 2. 菜单选择 -->
       <div class="section">
         <div class="step-tag">
           <div class="step-circle">2</div> 选择菜品与辣度
@@ -491,7 +488,6 @@
         <div class="menu-list" id="menuListSoup"></div>
       </div>
 
-      <!-- 3. 备注 -->
       <div class="section">
         <div class="step-tag">
           <div class="step-circle">3</div> 填写备注并提交
@@ -501,7 +497,6 @@
         <textarea id="remark" placeholder="例如：米饭少一点 / 不要花生 / 分开放辣椒 / 各份写上昵称等"></textarea>
       </div>
 
-      <!-- 4. 提交 & 结果 -->
       <div class="section">
         <button class="btn" id="submitBtn">提交订单</button>
         <div class="error" id="errorMsg" style="display:none;"></div>
@@ -521,7 +516,6 @@
             订单总金额：<span class="highlight" id="totalAmount"></span>
           </div>
           <div class="result-row">
-            <!-- TODO：改成你的 EMT 邮箱 -->
             请 EMT 至：<span class="highlight" id="emtEmail">your-emt-email@example.com</span>
           </div>
           <div class="result-row small">
@@ -540,198 +534,190 @@
   </div>
 
   <script>
-    // ================================
-    // 菜单数据（按你给的最终版菜单）
-    // spicy: true = 可选辣度；false = 不选辣度（汤类）
-    // kcal / desc 用于展示，不影响价格
-    // imageUrl 将来可加图片地址
-    // ================================
     const menuItems = [
-  // 🍱 三格便当类（主菜 + 番茄炒蛋 + 米饭）
-  {
-    id: 1,
-    category: 'bento',
-    name: '农家小炒肉 + 西红柿鸡蛋',
-    price: 16.99,
-    spicy: true,
-    kcal: 833,
-    desc: 'Pork, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-    imageUrl: './images/农家小炒肉.png'
-  },
-  {
-    id: 2,
-    category: 'bento',
-    name: '宫保鸡丁 + 西红柿鸡蛋',
-    price: 16.99,
-    spicy: true,
-    kcal: 815,
-    desc: 'Chicken, Peanuts, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-    imageUrl: './images/宫保鸡丁.png'
-  },
-  {
-    id: 3,
-    category: 'bento',
-    name: '鱼香茄子 + 西红柿鸡蛋',
-    price: 15.99,
-    spicy: true,
-    kcal: 720,
-    desc: 'Eggplant, Wood Ear Mushroom, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-    imageUrl: './images/鱼香茄子.png'
-  },
-  {
-    id: 4,
-    category: 'bento',
-    name: '川椒鸡翅 + 西红柿鸡蛋',
-    price: 18.99,
-    spicy: true,
-    kcal: 850,
-    desc: 'Chicken Wings, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-    imageUrl: './images/川椒鸡翅.png'
-  },
-  {
-    id: 5,
-    category: 'bento',
-    name: '尖椒肥肠 + 西红柿鸡蛋',
-    price: 16.99,
-    spicy: true,
-    kcal: 820,
-    desc: 'Pork Intestine, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-    imageUrl: './images/尖椒小炒肉.png'
-  },
-  {
-    id: 6,
-    category: 'bento',
-    name: '酸豆角炒肉末 + 西红柿鸡蛋',
-    price: 17.99,
-    spicy: true,
-    kcal: 738,
-    desc: 'Minced Pork, Pickled Green Beans, Tomatoes & Eggs, Rice, etc.',
-    imageUrl: './images/酸豆角肉沫.png'
-  },
-  {
-    id: 7,
-    category: 'bento',
-    name: '洋葱肥牛 + 西红柿鸡蛋',
-    price: 18.99,
-    spicy: true,
-    kcal: 890,
-    desc: 'Beef Slices, Onion, Mixed Vegetables, Tomatoes & Eggs, Rice, etc.',
-    imageUrl: './images/金汤酸菜肥牛.png'   // 你未提供洋葱肥牛图片，我暂时用这个
-  },
-  {
-    id: 8,
-    category: 'bento',
-    name: '肉食主义 + 西红柿鸡蛋',
-    price: 18.99,
-    spicy: true,
-    kcal: 910,
-    desc: 'Meat Balls, Pork Intestine, Spam, Beef Tripe, Tomatoes & Eggs, Rice, etc.',
-    imageUrl: './images/麻婆豆腐.png'    // 没对应图片，暂时放占位
-  },
-  {
-    id: 9,
-    category: 'bento',
-    name: '香辣四喜 + 西红柿鸡蛋',
-    price: 18.99,
-    spicy: true,
-    kcal: 810,
-    desc: 'Shrimp, Pork Rib, Beef Sirloin, Lamb Cube, Tomatoes & Eggs, Rice, etc.',
-    imageUrl: './images/乌筍小炒肉.png'  // 你未提供香辣四喜的图，我用这个暂放
-  },
-  {
-    id: 10,
-    category: 'bento',
-    name: '糖醋鱼柳 + 西红柿鸡蛋',
-    price: 16.99,
-    spicy: true,
-    kcal: 750,
-    desc: 'Fried Fish Fillet, Sweet & Sour Sauce, Tomatoes & Eggs, Rice, etc.',
-    imageUrl: './images/鱼香茄子.png'   // 暂用鱼香茄子图
-  },
-  {
-    id: 11,
-    category: 'bento',
-    name: '麻婆豆腐 + 西红柿鸡蛋',
-    price: 15.99,
-    spicy: true,
-    kcal: 719,
-    desc: 'Minced Pork, Tofu, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-    imageUrl: './images/麻婆豆腐.png'
-  },
+      // 三格便当
+      {
+        id: 1,
+        category: 'bento',
+        name: '农家小炒肉 + 西红柿鸡蛋',
+        price: 16.99,
+        spicy: true,
+        kcal: 833,
+        desc: 'Pork, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: './images/农家小炒肉.png'
+      },
+      {
+        id: 2,
+        category: 'bento',
+        name: '宫保鸡丁 + 西红柿鸡蛋',
+        price: 16.99,
+        spicy: true,
+        kcal: 815,
+        desc: 'Chicken, Peanuts, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: './images/宫保鸡丁.png'
+      },
+      {
+        id: 3,
+        category: 'bento',
+        name: '鱼香茄子 + 西红柿鸡蛋',
+        price: 15.99,
+        spicy: true,
+        kcal: 720,
+        desc: 'Eggplant, Wood Ear Mushroom, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: './images/鱼香茄子.png'
+      },
+      {
+        id: 4,
+        category: 'bento',
+        name: '川椒鸡翅 + 西红柿鸡蛋',
+        price: 18.99,
+        spicy: true,
+        kcal: 850,
+        desc: 'Chicken Wings, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: './images/乌笋小炒肉.png' // 暂用占位
+      },
+      {
+        id: 5,
+        category: 'bento',
+        name: '尖椒肥肠 + 西红柿鸡蛋',
+        price: 16.99,
+        spicy: true,
+        kcal: 820,
+        desc: 'Pork Intestine, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: './images/酸豆角炒肉末.png' // 占位
+      },
+      {
+        id: 6,
+        category: 'bento',
+        name: '酸豆角炒肉末 + 西红柿鸡蛋',
+        price: 17.99,
+        spicy: true,
+        kcal: 738,
+        desc: 'Minced Pork, Pickled Green Beans, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: './images/酸豆角肉沫.png'
+      },
+      {
+        id: 7,
+        category: 'bento',
+        name: '洋葱肥牛 + 西红柿鸡蛋',
+        price: 18.99,
+        spicy: true,
+        kcal: 890,
+        desc: 'Beef Slices, Onion, Mixed Vegetables, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: './images/金汤酸菜肥牛.png' // 暂用
+      },
+      {
+        id: 8,
+        category: 'bento',
+        name: '肉食主义 + 西红柿鸡蛋',
+        price: 18.99,
+        spicy: true,
+        kcal: 910,
+        desc: 'Meat Balls, Pork Intestine, Spam, Beef Tripe, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: './images/农家小炒肉.png' // 暂用
+      },
+      {
+        id: 9,
+        category: 'bento',
+        name: '香辣四喜 + 西红柿鸡蛋',
+        price: 18.99,
+        spicy: true,
+        kcal: 810,
+        desc: 'Shrimp, Pork Rib, Beef Sirloin, Lamb Cube, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: './images/乌笋小炒肉.png' // 暂用
+      },
+      {
+        id: 10,
+        category: 'bento',
+        name: '糖醋鱼柳 + 西红柿鸡蛋',
+        price: 16.99,
+        spicy: true,
+        kcal: 750,
+        desc: 'Fried Fish Fillet, Sweet & Sour Sauce, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: './images/鱼香茄子.png' // 暂用
+      },
+      {
+        id: 11,
+        category: 'bento',
+        name: '麻婆豆腐 + 西红柿鸡蛋',
+        price: 15.99,
+        spicy: true,
+        kcal: 719,
+        desc: 'Minced Pork, Tofu, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: './images/麻婆豆腐.png'
+      },
 
-  // 🍲 金汤系列
-  {
-    id: 12,
-    category: 'golden',
-    name: '金汤酸菜鱼 + 米饭',
-    price: 18.49,
-    spicy: true,
-    kcal: 860,
-    desc: 'Fish Fillet, Enoki Mushroom, Glass Noodles, Golden Pickled Cabbage Soup, Rice, etc.',
-    imageUrl: './images/金汤酸菜肥牛.png'   // 你只提供酸菜肥牛图，我先用这张
-  },
-  {
-    id: 13,
-    category: 'golden',
-    name: '金汤酸菜肥牛 + 米饭',
-    price: 18.49,
-    spicy: true,
-    kcal: 870,
-    desc: 'Beef Slices, Enoki Mushroom, Glass Noodles, Golden Pickled Cabbage Soup, Rice, etc.',
-    imageUrl: './images/金汤酸菜肥牛.png'
-  },
+      // 金汤系列
+      {
+        id: 12,
+        category: 'golden',
+        name: '金汤酸菜鱼 + 米饭',
+        price: 18.49,
+        spicy: true,
+        kcal: 860,
+        desc: 'Fish Fillet, Enoki Mushroom, Glass Noodles, Golden Pickled Cabbage Soup, Rice, etc.',
+        imageUrl: './images/金汤酸菜肥牛.png' // 暂用同一张
+      },
+      {
+        id: 13,
+        category: 'golden',
+        name: '金汤酸菜肥牛 + 米饭',
+        price: 18.49,
+        spicy: true,
+        kcal: 870,
+        desc: 'Beef Slices, Enoki Mushroom, Glass Noodles, Golden Pickled Cabbage Soup, Rice, etc.',
+        imageUrl: './images/金汤酸菜肥牛.png'
+      },
 
-  // 🍛 炒饭套餐
-  {
-    id: 14,
-    category: 'fried',
-    name: '咖喱牛肉炒饭 + 冬瓜虾仁汤',
-    price: 16.0,
-    spicy: true,
-    kcal: 854,
-    desc: 'Curry Beef Fried Rice + Winter Melon Shrimp Soup',
-    imageUrl: './images/乌筍小炒肉.png'   // 暂用占位
-  },
-  {
-    id: 15,
-    category: 'fried',
-    name: '那一年蛋炒饭 + 冬瓜虾仁汤',
-    price: 16.0,
-    spicy: true,
-    kcal: 754,
-    desc: 'Classic Fried Rice + Winter Melon Shrimp Soup',
-    imageUrl: './images/乌筍小炒肉.png'   // 暂用占位
-  },
+      // 炒饭套餐
+      {
+        id: 14,
+        category: 'fried',
+        name: '咖喱牛肉炒饭 + 冬瓜虾仁汤',
+        price: 16.0,
+        spicy: true,
+        kcal: 854,
+        desc: 'Curry Beef Fried Rice + Winter Melon Shrimp Soup',
+        imageUrl: './images/乌笋小炒肉.png' // 占位
+      },
+      {
+        id: 15,
+        category: 'fried',
+        name: '那一年蛋炒饭 + 冬瓜虾仁汤',
+        price: 16.0,
+        spicy: true,
+        kcal: 754,
+        desc: 'Classic Fried Rice + Winter Melon Shrimp Soup',
+        imageUrl: './images/乌笋小炒肉.png' // 占位
+      },
 
-  // 🥗 小食
-  {
-    id: 16,
-    category: 'side',
-    name: '凉拌土豆丝 + POP',
-    price: 3.0,
-    spicy: true,
-    kcal: 430,
-    desc: 'Shredded Potatoes, Chili Peppers, Green Onions, etc.',
-    imageUrl: './images/酸豆角炒肉末.png'
-  },
+      // 小食
+      {
+        id: 16,
+        category: 'side',
+        name: '凉拌土豆丝 + POP',
+        price: 3.0,
+        spicy: true,
+        kcal: 430,
+        desc: 'Shredded Potatoes, Chili Peppers, Green Onions, etc.',
+        imageUrl: './images/酸豆角炒肉末.png' // 占位
+      },
 
-  // 🍲 汤类
-  {
-    id: 17,
-    category: 'soup',
-    name: '冬瓜虾仁汤（12oz）',
-    price: 3.99,
-    spicy: false,
-    kcal: 94,
-    desc: 'Winter Melon & Shrimp Soup',
-    imageUrl: './images/麻婆豆腐.png'  // 暂用占位
-  }
-];
+      // 汤类
+      {
+        id: 17,
+        category: 'soup',
+        name: '冬瓜虾仁汤（12oz）',
+        price: 3.99,
+        spicy: false,
+        kcal: 94,
+        desc: 'Winter Melon & Shrimp Soup',
+        imageUrl: './images/麻婆豆腐.png' // 暂用
+      }
+    ];
 
-    // TODO：改成你的真实 EMT 邮箱
     const EMT_EMAIL = "your-emt-email@example.com";
 
-    // 防止同一页面重复提交
     let hasSubmitted = false;
 
     const menuListBentoEl = document.getElementById('menuListBento');
@@ -807,7 +793,6 @@
 
     renderAllMenus();
 
-    // 默认日期设为明天（暂时保留）
     (function setDefaultDate() {
       const dateInput = document.getElementById('orderDate');
       const d = new Date();
@@ -818,9 +803,6 @@
       dateInput.value = `${yyyy}-${mm}-${dd}`;
     })();
 
-    // ================================
-    // 提交订单逻辑（含防重复提交）
-    // ================================
     const submitBtn = document.getElementById('submitBtn');
     const errorMsg = document.getElementById('errorMsg');
     const resultBox = document.getElementById('result');
@@ -839,7 +821,6 @@
       errorMsg.style.display = 'none';
       resultBox.style.display = 'none';
 
-      // 防止同一页面多次提交
       if (hasSubmitted) {
         showError('本页面已成功提交一份预订单，如需再次下单请刷新页面或重新打开链接。');
         return;
@@ -868,7 +849,6 @@
         return showError('请填写微信号，方便与客服沟通');
       }
 
-      // 读取所有数量
       const qtyInputs = document.querySelectorAll('input[type="number"][data-id]');
       let hasItem = false;
       let total = 0;
@@ -904,7 +884,6 @@
         return showError('请至少选择一个菜品的数量');
       }
 
-      // 生成订单号（本地：日期 + 当日序号）
       const dateStr = orderDate.replace(/-/g, '');
       const key = 'orderCount_' + dateStr;
       const prevCount = parseInt(localStorage.getItem(key) || '0', 10);
@@ -913,7 +892,6 @@
       const seqStr = String(seq).padStart(2, '0');
       const orderNo = `${dateStr}-${seqStr}`;
 
-      // 展示结果
       orderNoEl.textContent = orderNo;
       orderNoForEmtEl.textContent = orderNo;
       totalAmountEl.textContent = 'CAD $' + total.toFixed(2);
@@ -935,13 +913,9 @@
 
       resultBox.style.display = 'block';
 
-      // 锁住按钮，防止重复提交
       hasSubmitted = true;
       submitBtn.disabled = true;
       submitBtn.textContent = '已提交（如需再次下单请刷新页面）';
-
-      // 将来如果接 Google Sheet / 后端，这里可以发 payload
-      // const payload = { orderNo, orderDate, pickupTime, nickName, phone, wechatId, total, items: orderedItems };
     });
 
     function showError(msg) {
@@ -951,6 +925,7 @@
   </script>
 </body>
 </html>
+
 
 
 
