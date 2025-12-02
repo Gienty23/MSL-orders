@@ -860,8 +860,9 @@
     ];
 
     // TODO: 改成你的真实 EMT 邮箱
-    const EMT_EMAIL = "your-emt-email@example.com";
-
+    const EMT_EMAIL = "test@gmail.com";
+    / / ✅ Google Apps Script 写入 Sheet 的地址
+    const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbyRiAS2BXhAupWlOeRlgbdYt-joop5dV1plhLvfVzM0DtLyNSxJ0_03tpx91bagar84/exec";
     let hasSubmitted = false;
     let cart = [];
 
@@ -1094,89 +1095,128 @@
 
     // 提交订单
     submitBtn.addEventListener('click', function () {
-      errorMsg.style.display = 'none';
-      resultBox.style.display = 'none';
+  errorMsg.style.display = 'none';
+  resultBox.style.display = 'none';
 
-      if (hasSubmitted) {
-        showError('本页面已成功提交一份预订单，如需再次下单请刷新页面或重新打开链接。');
-        return;
-      }
+  if (hasSubmitted) {
+    showError('本页面已成功提交一份预订单，如需再次下单请刷新页面或重新打开链接。');
+    return;
+  }
 
-      const orderDate = document.getElementById('orderDate').value;
-      const pickupTime = document.getElementById('pickupTime').value;
-      const nickName = document.getElementById('customerName').value.trim();
-      const phone = document.getElementById('customerPhone').value.trim();
-      const wechatId = document.getElementById('wechatId').value.trim();
-      const remark = document.getElementById('remark').value.trim();
+  const orderDate = document.getElementById('orderDate').value;
+  const pickupTime = document.getElementById('pickupTime').value;
+  const nickName = document.getElementById('customerName').value.trim();
+  const phone = document.getElementById('customerPhone').value.trim();
+  const wechatId = document.getElementById('wechatId').value.trim();
+  const remark = document.getElementById('remark').value.trim();
 
-      if (!orderDate) {
-        return showError('请选择取餐日期');
-      }
+  if (!orderDate) {
+    return showError('请选择取餐日期');
+  }
 
-      const todayStr = new Date().toISOString().slice(0,10);
-      if (orderDate < todayStr) {
-        return showError('取餐日期不能早于今天');
-      }
+  const todayStr = new Date().toISOString().slice(0,10);
+  if (orderDate < todayStr) {
+    return showError('取餐日期不能早于今天');
+  }
 
-      if (!nickName) {
-        return showError('请填写昵称');
-      }
+  if (!nickName) {
+    return showError('请填写昵称');
+  }
 
-      if (!wechatId) {
-        return showError('请填写微信号，方便与客服沟通');
-      }
+  if (!wechatId) {
+    return showError('请填写微信号，方便与客服沟通');
+  }
 
-      if (cart.length === 0) {
-        return showError('购物车为空，请先添加至少一份菜品');
-      }
+  if (cart.length === 0) {
+    return showError('购物车为空，请先添加至少一份菜品');
+  }
 
-      let total = 0;
-      cart.forEach(item => {
-        total += item.price * item.quantity;
-      });
+  // 计算总金额
+  let total = 0;
+  cart.forEach(item => {
+    total += item.price * item.quantity;
+  });
 
-      const dateStr = orderDate.replace(/-/g, '');
-      const key = 'orderCount_' + dateStr;
-      const prevCount = parseInt(localStorage.getItem(key) || '0', 10);
-      const seq = prevCount + 1;
-      localStorage.setItem(key, seq.toString());
-      const seqStr = String(seq).padStart(2, '0');
-      const orderNo = `${dateStr}-${seqStr}`;
+  // 生成订单号（和之前一样）
+  const dateStr = orderDate.replace(/-/g, '');
+  const key = 'orderCount_' + dateStr;
+  const prevCount = parseInt(localStorage.getItem(key) || '0', 10);
+  const seq = prevCount + 1;
+  localStorage.setItem(key, seq.toString());
+  const seqStr = String(seq).padStart(2, '0');
+  const orderNo = `${dateStr}-${seqStr}`;
 
-      orderNoEl.textContent = orderNo;
-      orderNoForEmtEl.textContent = orderNo;
-      totalAmountEl.textContent = 'CAD $' + total.toFixed(2);
-      orderDateShowEl.textContent = orderDate;
-      if (pickupTime) {
-        pickupTimeShowWrapper.style.display = 'inline';
-        pickupTimeShowEl.textContent = pickupTime;
-      } else {
-        pickupTimeShowWrapper.style.display = 'none';
-      }
+  // 页面展示部分（和之前一样）
+  orderNoEl.textContent = orderNo;
+  orderNoForEmtEl.textContent = orderNo;
+  totalAmountEl.textContent = 'CAD $' + total.toFixed(2);
+  orderDateShowEl.textContent = orderDate;
+  if (pickupTime) {
+    pickupTimeShowWrapper.style.display = 'inline';
+    pickupTimeShowEl.textContent = pickupTime;
+  } else {
+    pickupTimeShowWrapper.style.display = 'none';
+  }
 
-      itemsSummaryEl.innerHTML = '';
-      cart.forEach(item => {
-        const dishInfo = menuItems.find(m => m.id === item.id);
-        const spicyText = dishInfo && dishInfo.spicy && item.spicyLevel
-          ? `（${item.spicyLevel}）` : '';
-        const li = document.createElement('li');
-        li.textContent = `${item.name}${spicyText} × ${item.quantity} = CAD $${(item.price * item.quantity).toFixed(2)}`;
-        itemsSummaryEl.appendChild(li);
-      });
-      if (remark) {
-        const li = document.createElement('li');
-        li.textContent = `备注：${remark}`;
-        itemsSummaryEl.appendChild(li);
-      }
+  itemsSummaryEl.innerHTML = '';
+  cart.forEach(item => {
+    const dishInfo = menuItems.find(m => m.id === item.id);
+    const spicyText = dishInfo && dishInfo.spicy && item.spicyLevel
+      ? `（${item.spicyLevel}）` : '';
+    const li = document.createElement('li');
+    li.textContent = `${item.name}${spicyText} × ${item.quantity} = CAD $${(item.price * item.quantity).toFixed(2)}`;
+    itemsSummaryEl.appendChild(li);
+  });
+  if (remark) {
+    const li = document.createElement('li');
+    li.textContent = `备注：${remark}`;
+    itemsSummaryEl.appendChild(li);
+  }
 
-      resultBox.style.display = 'block';
+  resultBox.style.display = 'block';
 
-      hasSubmitted = true;
-      submitBtn.disabled = true;
-      submitBtn.textContent = '已提交（如需再次下单请刷新页面）';
+  hasSubmitted = true;
+  submitBtn.disabled = true;
+  submitBtn.textContent = '已提交（如需再次下单请刷新页面）';
 
-      // 这里未来可以加：把订单发送到 Google Sheet / 后端
-    });
+  // ✅ 这里把订单发给 Google Sheet
+  const payload = {
+    order: {
+      orderId: orderNo,
+      nickname: nickName,
+      phone: phone,
+      wechat: wechatId,
+      date: orderDate,
+      pickupTime: pickupTime || '',
+      comment: remark || ''
+    },
+    items: cart.map(item => {
+      const dishInfo = menuItems.find(m => m.id === item.id);
+      const isSpicy = dishInfo && dishInfo.spicy;
+      return {
+        name: item.name,
+        spicy: isSpicy ? (item.spicyLevel || '默认') : '无辣度',
+        qty: item.quantity
+      };
+    })
+  };
+
+  // 异步发送，不影响前端展示
+  fetch(SHEET_API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log('Sheet response:', data);
+  })
+  .catch(err => {
+    console.error('Sheet error:', err);
+  });
+});
 
     function showError(msg) {
       errorMsg.textContent = msg;
@@ -1185,6 +1225,7 @@
   </script>
 </body>
 </html>
+
 
 
 
