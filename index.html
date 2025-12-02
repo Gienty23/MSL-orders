@@ -201,7 +201,7 @@
 
     .menu-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       grid-gap: 12px;
     }
 
@@ -216,43 +216,33 @@
       box-shadow: 0 6px 15px rgba(0,0,0,0.45);
     }
 
+    /* 方形菜品图片区域 */
     .menu-img {
-  width: 100%;
-  aspect-ratio: 1 / 1;         /* 正方形 */
-  border-radius: 14px;
-  overflow: hidden;
-  margin-bottom: 8px;
-  background: linear-gradient(135deg, rgba(15,23,42,0.1), rgba(15,23,42,0.7));
-  position: relative;
-}
-
-/* 图片不变形，只裁剪多余部分 */
-.menu-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;           /* 关键：像你参考图一样铺满 */
-  display: block;
-}
-
-/* 占位图 */
-.menu-img-placeholder {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  color: rgba(255,255,255,0.8);
-  background: linear-gradient(135deg, rgba(15,23,42,0.1), rgba(15,23,42,0.7));
-  backdrop-filter: blur(2px);
-}
-
-/* 让卡片更宽一点 */
-.menu-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* 原本是 250px */
-  grid-gap: 12px;
-}
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, rgba(15,23,42,0.1), rgba(15,23,42,0.7));
+      position: relative;
+    }
+    .menu-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .menu-img-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: rgba(255,255,255,0.8);
+      background: linear-gradient(135deg, rgba(15,23,42,0.1), rgba(15,23,42,0.7));
+      backdrop-filter: blur(2px);
+    }
 
     .menu-header {
       display: flex;
@@ -288,42 +278,21 @@
     .menu-desc {
       font-size: 11px;
       color: var(--text-sub);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
-    .qty-row {
+    .menu-footer {
       display: flex;
-      align-items: center;
-      margin-top: 6px;
-      font-size: 13px;
-      justify-content: space-between;
-      gap: 8px;
-    }
-    .qty-row input[type="number"] {
-      width: 80px;
-      padding: 4px 6px;
-      border-radius: 8px;
-      border: 1px solid rgba(75,85,99,0.9);
-      background: rgba(15,23,42,0.9);
-      color: var(--text-main);
+      justify-content: flex-end;
+      margin-top: 4px;
     }
 
-    .spicy-row {
-      display: flex;
-      align-items: center;
-      margin-top: 6px;
-      font-size: 13px;
-      justify-content: space-between;
-      gap: 8px;
-    }
-    .spicy-row select {
-      flex: 1;
-      padding: 4px 6px;
-      border-radius: 8px;
-      border: 1px solid rgba(75,85,99,0.9);
-      background: rgba(15,23,42,0.9);
-      color: var(--text-main);
-      font-size: 13px;
+    .btn,
+    .btn-secondary,
+    .btn-primary,
+    .btn-add,
+    .cart-remove {
+      font-family: inherit;
     }
 
     .btn {
@@ -348,6 +317,22 @@
       opacity: 0.6;
       cursor: not-allowed;
       box-shadow: none;
+    }
+
+    .btn-add {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(248,113,113,0.7);
+      background: rgba(248,113,113,0.1);
+      color: #fecaca;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-add:hover {
+      background: rgba(248,113,113,0.25);
     }
 
     .error {
@@ -396,6 +381,120 @@
       padding-left: 20px;
     }
 
+    /* 购物车样式 */
+    .cart-empty {
+      font-size: 13px;
+      color: var(--text-sub);
+      padding: 4px 0;
+    }
+    .cart-items {
+      margin-top: 6px;
+      border-radius: 14px;
+      border: 1px solid rgba(55,65,81,0.9);
+      background: rgba(15,23,42,0.9);
+      padding: 8px 10px;
+      max-height: 260px;
+      overflow-y: auto;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px dashed rgba(55,65,81,0.8);
+      gap: 10px;
+    }
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+    .cart-item-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .cart-item-meta {
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+    .cart-remove {
+      border-radius: 999px;
+      border: 1px solid rgba(239,68,68,0.7);
+      background: rgba(127,29,29,0.6);
+      color: #fee2e2;
+      font-size: 11px;
+      padding: 3px 8px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .cart-remove:hover {
+      background: rgba(127,29,29,0.9);
+    }
+
+    /* 弹窗 */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 40;
+    }
+    .modal {
+      width: 100%;
+      max-width: 340px;
+      background: #020617;
+      border-radius: 18px;
+      padding: 14px 16px 12px;
+      border: 1px solid rgba(148,163,184,0.7);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    }
+    .modal-title {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    .modal-row {
+      font-size: 13px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .modal-row input[type="number"],
+    .modal-row select {
+      max-width: 160px;
+      padding: 5px 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(75,85,99,0.9);
+      background: rgba(15,23,42,0.9);
+      color: var(--text-main);
+      font-size: 13px;
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .btn-secondary {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7);
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      padding: 6px 14px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .btn-primary {
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, var(--primary), var(--accent-red));
+      color: #fff;
+      padding: 6px 16px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
     @media (max-width: 640px) {
       .container {
         padding: 16px 12px 22px;
@@ -409,6 +508,7 @@
 <body>
   <div class="page-wrap">
     <div class="container">
+      <!-- 顶部 LOGO + 文案 -->
       <div class="header">
         <div class="logo-wrap">
           <div class="logo-inner">MSL</div>
@@ -426,6 +526,7 @@
         </div>
       </div>
 
+      <!-- 1. 取餐信息 -->
       <div class="section">
         <div class="step-tag">
           <div class="step-circle">1</div> 填写取餐信息
@@ -459,13 +560,14 @@
         </div>
       </div>
 
+      <!-- 2. 菜单选择 -->
       <div class="section">
         <div class="step-tag">
-          <div class="step-circle">2</div> 选择菜品与辣度
+          <div class="step-circle">2</div> 选择菜品（点击「＋」添加到购物车）
         </div>
         <h2>菜品选择</h2>
         <div class="hint">
-          三格便当 / 金汤系列 / 炒饭套餐 / 小食均可选择辣度（不辣 / 正常辣 / 加辣），汤类无需选择辣度。
+          三格便当 / 金汤系列 / 炒饭套餐 / 小食可选择辣度；汤类默认无辣度。每点击一次「＋」即为一组配置，可重复添加不同辣度组合。
         </div>
 
         <div class="menu-group-title">
@@ -499,54 +601,95 @@
         <div class="menu-list" id="menuListSoup"></div>
       </div>
 
+      <!-- 3. 购物车 -->
       <div class="section">
         <div class="step-tag">
-          <div class="step-circle">3</div> 填写备注并提交
+          <div class="step-circle">3</div> 查看 / 编辑购物车
+        </div>
+        <h2>已选菜品</h2>
+        <div class="hint">可随时移除或修改，如需不同辣度请分多次添加同一菜品。</div>
+        <div id="cartEmpty" class="cart-empty">
+          当前购物车为空，请在上方菜品卡片中点击「＋」添加。
+        </div>
+        <div id="cartItems" class="cart-items" style="display:none;"></div>
+        <div id="cartTotal" style="margin-top:8px; font-size:14px; display:none;">
+          小计：<span class="highlight" id="cartTotalAmount"></span>
+        </div>
+      </div>
+
+      <!-- 4. 备注 + 提交 -->
+      <div class="section">
+        <div class="step-tag">
+          <div class="step-circle">4</div> 填写备注并提交
         </div>
         <h2>备注特殊要求</h2>
         <label for="remark">备注</label>
         <textarea id="remark" placeholder="例如：米饭少一点 / 不要花生 / 分开放辣椒 / 各份写上昵称等"></textarea>
-      </div>
 
-      <div class="section">
-        <button class="btn" id="submitBtn">提交订单</button>
-        <div class="error" id="errorMsg" style="display:none;"></div>
+        <div style="margin-top:14px;">
+          <button class="btn" id="submitBtn">提交订单</button>
+          <div class="error" id="errorMsg" style="display:none;"></div>
 
-        <div id="result" style="display:none;" class="result-box">
-          <div class="result-row">
-            ✅ 预订单已提交！<span class="badge">请在 30 分钟内完成 EMT</span>
-          </div>
-          <div class="result-row">
-            订单号：<span class="highlight" id="orderNo"></span>
-          </div>
-          <div class="result-row">
-            取餐日期：<span class="highlight" id="orderDateShow"></span>
-            <span id="pickupTimeShowWrapper" style="display:none;"> ｜ 取餐时间：<span class="highlight" id="pickupTimeShow"></span></span>
-          </div>
-          <div class="result-row">
-            订单总金额：<span class="highlight" id="totalAmount"></span>
-          </div>
-          <div class="result-row">
-            请 EMT 至：<span class="highlight" id="emtEmail">your-emt-email@example.com</span>
-          </div>
-          <div class="result-row small">
-            👉 EMT 备注请填写订单号：<span class="highlight" id="orderNoForEmt"></span>
-          </div>
-          <div class="result-row small">
-            ⚠️ 订单仅在本店收到 EMT 付款并通过微信 / 电话与您确认后才视为有效。如 30 分钟内未付款，预订单将自动作废。
-          </div>
-          <div class="items-summary">
-            <div>本单菜品：</div>
-            <ul id="itemsSummary"></ul>
+          <div id="result" style="display:none;" class="result-box">
+            <div class="result-row">
+              ✅ 预订单已提交！<span class="badge">请在 30 分钟内完成 EMT</span>
+            </div>
+            <div class="result-row">
+              订单号：<span class="highlight" id="orderNo"></span>
+            </div>
+            <div class="result-row">
+              取餐日期：<span class="highlight" id="orderDateShow"></span>
+              <span id="pickupTimeShowWrapper" style="display:none;"> ｜ 取餐时间：<span class="highlight" id="pickupTimeShow"></span></span>
+            </div>
+            <div class="result-row">
+              订单总金额：<span class="highlight" id="totalAmount"></span>
+            </div>
+            <div class="result-row">
+              请 EMT 至：<span class="highlight" id="emtEmail">your-emt-email@example.com</span>
+            </div>
+            <div class="result-row small">
+              👉 EMT 备注请填写订单号：<span class="highlight" id="orderNoForEmt"></span>
+            </div>
+            <div class="result-row small">
+              ⚠️ 订单仅在本店收到 EMT 付款并通过微信 / 电话与您确认后才视为有效。如 30 分钟内未付款，预订单将自动作废。
+            </div>
+            <div class="items-summary">
+              <div>本单菜品：</div>
+              <ul id="itemsSummary"></ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- 加菜弹窗 -->
+  <div id="modalOverlay" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-title" id="modalDishName">添加菜品</div>
+      <div class="modal-row" id="modalSpicyRow">
+        <span>辣度：</span>
+        <select id="modalSpicySelect">
+          <option value="不辣">不辣</option>
+          <option value="正常辣" selected>正常辣</option>
+          <option value="加辣">加辣</option>
+        </select>
+      </div>
+      <div class="modal-row">
+        <span>数量：</span>
+        <input type="number" id="modalQty" min="1" value="1">
+      </div>
+      <div class="modal-actions">
+        <button id="modalCancel" class="btn-secondary">取消</button>
+        <button id="modalConfirm" class="btn-primary">加入购物车</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // 菜单数据（照烧肥牛已替换）
     const menuItems = [
-      // 三格便当
+      // 🍱 三格便当类
       {
         id: 1,
         category: 'bento',
@@ -585,7 +728,7 @@
         spicy: true,
         kcal: 850,
         desc: 'Chicken Wings, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: './images/川椒鸡翅.png' // 暂用占位
+        imageUrl: './images/乌筍小炒肉.png'
       },
       {
         id: 5,
@@ -595,7 +738,7 @@
         spicy: true,
         kcal: 820,
         desc: 'Pork Intestine, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: './images/尖椒肥肠.png' // 占位
+        imageUrl: './images/乌筍小炒肉.png'
       },
       {
         id: 6,
@@ -611,11 +754,11 @@
         id: 7,
         category: 'bento',
         name: '照烧肥牛 + 西红柿鸡蛋',
-        price: 18.99,
-        spicy: true,
-        kcal: 890,
-        desc: 'Teriyaki Beef, Onion, Mixed Vegetables, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: './images/金汤酸菜肥牛.png' // 暂用
+        price: 17.99,
+        spicy: false,
+        kcal: 845,
+        desc: 'Teriyaki Beef + Tomatoes & Eggs, Rice, etc.',
+        imageUrl: './images/金汤酸菜肥牛.png'
       },
       {
         id: 8,
@@ -625,7 +768,7 @@
         spicy: true,
         kcal: 910,
         desc: 'Meat Balls, Pork Intestine, Spam, Beef Tripe, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: './images/农家小炒肉.png' // 暂用
+        imageUrl: './images/麻婆豆腐.png'
       },
       {
         id: 9,
@@ -635,17 +778,17 @@
         spicy: true,
         kcal: 810,
         desc: 'Shrimp, Pork Rib, Beef Sirloin, Lamb Cube, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: './images/乌笋小炒肉.png' // 暂用
+        imageUrl: './images/乌筍小炒肉.png'
       },
       {
         id: 10,
         category: 'bento',
         name: '糖醋鱼柳 + 西红柿鸡蛋',
         price: 16.99,
-        spicy: true,
+        spicy: false,
         kcal: 750,
         desc: 'Fried Fish Fillet, Sweet & Sour Sauce, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: './images/鱼香茄子.png' // 暂用
+        imageUrl: './images/鱼香茄子.png'
       },
       {
         id: 11,
@@ -658,7 +801,7 @@
         imageUrl: './images/麻婆豆腐.png'
       },
 
-      // 金汤系列
+      // 🍲 金汤系列
       {
         id: 12,
         category: 'golden',
@@ -667,7 +810,7 @@
         spicy: true,
         kcal: 860,
         desc: 'Fish Fillet, Enoki Mushroom, Glass Noodles, Golden Pickled Cabbage Soup, Rice, etc.',
-        imageUrl: './images/金汤酸菜鱼.png' // 
+        imageUrl: './images/金汤酸菜肥牛.png'
       },
       {
         id: 13,
@@ -680,29 +823,29 @@
         imageUrl: './images/金汤酸菜肥牛.png'
       },
 
-      // 炒饭套餐
+      // 🍛 炒饭套餐
       {
         id: 14,
         category: 'fried',
         name: '咖喱牛肉炒饭 + 冬瓜虾仁汤',
         price: 16.0,
-        spicy: true,
+        spicy: false,
         kcal: 854,
         desc: 'Curry Beef Fried Rice + Winter Melon Shrimp Soup',
-        imageUrl: './images/乌笋小炒肉.png' // 占位
+        imageUrl: './images/乌筍小炒肉.png'
       },
       {
         id: 15,
         category: 'fried',
         name: '那一年蛋炒饭 + 冬瓜虾仁汤',
         price: 16.0,
-        spicy: true,
+        spicy: false,
         kcal: 754,
         desc: 'Classic Fried Rice + Winter Melon Shrimp Soup',
-        imageUrl: './images/乌笋小炒肉.png' // 占位
+        imageUrl: './images/乌筍小炒肉.png'
       },
 
-      // 小食
+      // 🥗 小食 / 加购
       {
         id: 16,
         category: 'side',
@@ -711,10 +854,10 @@
         spicy: true,
         kcal: 430,
         desc: 'Shredded Potatoes, Chili Peppers, Green Onions, etc.',
-        imageUrl: './images/酸豆角炒肉末.png' // 占位
+        imageUrl: './images/酸豆角炒肉末.png'
       },
 
-      // 汤类
+      // 🍲 汤类
       {
         id: 17,
         category: 'soup',
@@ -723,19 +866,51 @@
         spicy: false,
         kcal: 94,
         desc: 'Winter Melon & Shrimp Soup',
-        imageUrl: './images/麻婆豆腐.png' // 暂用
+        imageUrl: './images/麻婆豆腐.png'
       }
     ];
 
+    // TODO: 改成你的真实 EMT 邮箱
     const EMT_EMAIL = "your-emt-email@example.com";
 
     let hasSubmitted = false;
+    let cart = [];
 
     const menuListBentoEl = document.getElementById('menuListBento');
     const menuListGoldenEl = document.getElementById('menuListGolden');
     const menuListFriedEl = document.getElementById('menuListFried');
     const menuListSideEl = document.getElementById('menuListSide');
     const menuListSoupEl = document.getElementById('menuListSoup');
+
+    const cartEmptyEl = document.getElementById('cartEmpty');
+    const cartItemsEl = document.getElementById('cartItems');
+    const cartTotalBox = document.getElementById('cartTotal');
+    const cartTotalAmountEl = document.getElementById('cartTotalAmount');
+
+    const submitBtn = document.getElementById('submitBtn');
+    const errorMsg = document.getElementById('errorMsg');
+    const resultBox = document.getElementById('result');
+    const orderNoEl = document.getElementById('orderNo');
+    const orderNoForEmtEl = document.getElementById('orderNoForEmt');
+    const totalAmountEl = document.getElementById('totalAmount');
+    const itemsSummaryEl = document.getElementById('itemsSummary');
+    const orderDateShowEl = document.getElementById('orderDateShow');
+    const pickupTimeShowWrapper = document.getElementById('pickupTimeShowWrapper');
+    const pickupTimeShowEl = document.getElementById('pickupTimeShow');
+    const emtEmailEl = document.getElementById('emtEmail');
+
+    emtEmailEl.textContent = EMT_EMAIL;
+
+    // 弹窗元素
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalDishNameEl = document.getElementById('modalDishName');
+    const modalSpicyRow = document.getElementById('modalSpicyRow');
+    const modalSpicySelect = document.getElementById('modalSpicySelect');
+    const modalQtyInput = document.getElementById('modalQty');
+    const modalCancelBtn = document.getElementById('modalCancel');
+    const modalConfirmBtn = document.getElementById('modalConfirm');
+
+    let currentDishId = null;
 
     function renderMenuForCategory(category, containerEl) {
       containerEl.innerHTML = '';
@@ -749,25 +924,12 @@
             <div class="menu-img">
               ${item.imageUrl
                 ? `<img src="${item.imageUrl}" alt="${item.name}">`
-                : `<div class="menu-img-placeholder">菜品图片占位（可后期替换为真实照片）</div>`
+                : `<div class="menu-img-placeholder">菜品图片占位</div>`
               }
             </div>
           `;
 
-          const spicyTags = item.spicy
-            ? `<span class="tag-spicy">可选辣度</span><span>${item.kcal} Kcal</span>`
-            : `<span>无辣度</span><span>${item.kcal} Kcal</span>`;
-
-          const spicyHtml = item.spicy ? `
-            <div class="spicy-row">
-              <span>辣度：</span>
-              <select data-spicy-id="${item.id}">
-                <option value="不辣">不辣</option>
-                <option value="正常辣" selected>正常辣</option>
-                <option value="加辣">加辣</option>
-              </select>
-            </div>
-          ` : '';
+          const spicyTagText = item.spicy ? '可选辣度' : '默认无辣度';
 
           div.innerHTML = `
             ${imgHtml}
@@ -777,16 +939,15 @@
                 <div class="menu-price">CAD $${item.price.toFixed(2)}</div>
               </div>
               <div class="menu-tags">
-                ${spicyTags}
+                <span class="${item.spicy ? 'tag-spicy' : ''}">${spicyTagText}</span>
+                <span>${item.kcal} Kcal</span>
               </div>
-              <div class="menu-desc">
-                ${item.desc}
+              <div class="menu-desc">${item.desc}</div>
+              <div class="menu-footer">
+                <button class="btn-add" data-id="${item.id}">
+                  ＋ 加入
+                </button>
               </div>
-              <div class="qty-row">
-                <span>数量（份）：</span>
-                <input type="number" min="0" max="20" value="0" data-id="${item.id}">
-              </div>
-              ${spicyHtml}
             </div>
           `;
 
@@ -804,6 +965,7 @@
 
     renderAllMenus();
 
+    // 默认日期设为明天
     (function setDefaultDate() {
       const dateInput = document.getElementById('orderDate');
       const d = new Date();
@@ -814,20 +976,134 @@
       dateInput.value = `${yyyy}-${mm}-${dd}`;
     })();
 
-    const submitBtn = document.getElementById('submitBtn');
-    const errorMsg = document.getElementById('errorMsg');
-    const resultBox = document.getElementById('result');
-    const orderNoEl = document.getElementById('orderNo');
-    const orderNoForEmtEl = document.getElementById('orderNoForEmt');
-    const totalAmountEl = document.getElementById('totalAmount');
-    const itemsSummaryEl = document.getElementById('itemsSummary');
-    const orderDateShowEl = document.getElementById('orderDateShow');
-    const pickupTimeShowWrapper = document.getElementById('pickupTimeShowWrapper');
-    const pickupTimeShowEl = document.getElementById('pickupTimeShow');
-    const emtEmailEl = document.getElementById('emtEmail');
+    // 打开弹窗
+    function openModal(dishId) {
+      const dish = menuItems.find(m => m.id === dishId);
+      if (!dish) return;
+      currentDishId = dishId;
+      modalDishNameEl.textContent = dish.name;
+      modalQtyInput.value = 1;
 
-    emtEmailEl.textContent = EMT_EMAIL;
+      if (dish.spicy) {
+        modalSpicyRow.style.display = 'flex';
+        modalSpicySelect.value = '正常辣';
+      } else {
+        modalSpicyRow.style.display = 'none';
+        modalSpicySelect.value = '无辣度';
+      }
 
+      modalOverlay.style.display = 'flex';
+    }
+
+    function closeModal() {
+      modalOverlay.style.display = 'none';
+      currentDishId = null;
+    }
+
+    // 购物车渲染
+    function renderCart() {
+      if (cart.length === 0) {
+        cartEmptyEl.style.display = 'block';
+        cartItemsEl.style.display = 'none';
+        cartTotalBox.style.display = 'none';
+        cartItemsEl.innerHTML = '';
+        cartTotalAmountEl.textContent = '';
+        return;
+      }
+
+      cartEmptyEl.style.display = 'none';
+      cartItemsEl.style.display = 'block';
+      cartTotalBox.style.display = 'block';
+
+      cartItemsEl.innerHTML = '';
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const lineTotal = item.price * item.quantity;
+        total += lineTotal;
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        const spicyText = item.spicyLevel ? `（${item.spicyLevel}）` : '';
+        div.innerHTML = `
+          <div>
+            <div class="cart-item-name">${item.name}${spicyText}</div>
+            <div class="cart-item-meta">数量：x${item.quantity} ｜ 小计：CAD $${lineTotal.toFixed(2)}</div>
+          </div>
+          <button class="cart-remove" data-index="${index}">删除</button>
+        `;
+        cartItemsEl.appendChild(div);
+      });
+
+      cartTotalAmountEl.textContent = 'CAD $' + total.toFixed(2);
+    }
+
+    // 点击事件代理：加菜 & 删除
+    document.addEventListener('click', function (e) {
+      const addBtn = e.target.closest('.btn-add');
+      if (addBtn) {
+        const id = parseInt(addBtn.getAttribute('data-id'), 10);
+        openModal(id);
+        return;
+      }
+
+      const removeBtn = e.target.closest('.cart-remove');
+      if (removeBtn) {
+        const idx = parseInt(removeBtn.getAttribute('data-index'), 10);
+        if (!isNaN(idx)) {
+          cart.splice(idx, 1);
+          renderCart();
+        }
+        return;
+      }
+    });
+
+    modalCancelBtn.addEventListener('click', function () {
+      closeModal();
+    });
+
+    modalOverlay.addEventListener('click', function (e) {
+      if (e.target === modalOverlay) {
+        closeModal();
+      }
+    });
+
+    modalConfirmBtn.addEventListener('click', function () {
+      if (currentDishId == null) return;
+      const dish = menuItems.find(m => m.id === currentDishId);
+      if (!dish) return;
+
+      const qty = parseInt(modalQtyInput.value || '1', 10);
+      if (isNaN(qty) || qty <= 0) {
+        alert('数量至少为 1');
+        return;
+      }
+
+      let spicyLevel = '';
+      if (dish.spicy) {
+        spicyLevel = modalSpicySelect.value || '正常辣';
+      }
+
+      // 同一菜+同一辣度合并
+      const existingIndex = cart.findIndex(
+        item => item.id === dish.id && item.spicyLevel === spicyLevel
+      );
+      if (existingIndex >= 0) {
+        cart[existingIndex].quantity += qty;
+      } else {
+        cart.push({
+          id: dish.id,
+          name: dish.name,
+          price: dish.price,
+          spicyLevel,
+          quantity: qty
+        });
+      }
+
+      renderCart();
+      closeModal();
+    });
+
+    // 提交订单
     submitBtn.addEventListener('click', function () {
       errorMsg.style.display = 'none';
       resultBox.style.display = 'none';
@@ -842,6 +1118,7 @@
       const nickName = document.getElementById('customerName').value.trim();
       const phone = document.getElementById('customerPhone').value.trim();
       const wechatId = document.getElementById('wechatId').value.trim();
+      const remark = document.getElementById('remark').value.trim();
 
       if (!orderDate) {
         return showError('请选择取餐日期');
@@ -860,40 +1137,14 @@
         return showError('请填写微信号，方便与客服沟通');
       }
 
-      const qtyInputs = document.querySelectorAll('input[type="number"][data-id]');
-      let hasItem = false;
-      let total = 0;
-      const orderedItems = [];
-
-      qtyInputs.forEach(input => {
-        const qty = parseInt(input.value || '0', 10);
-        if (qty > 0) {
-          const id = parseInt(input.getAttribute('data-id'), 10);
-          const item = menuItems.find(m => m.id === id);
-          if (item) {
-            hasItem = true;
-            const itemTotal = item.price * qty;
-
-            let spicyLevel = '';
-            if (item.spicy) {
-              const spicySelect = document.querySelector(`select[data-spicy-id="${item.id}"]`);
-              spicyLevel = spicySelect ? spicySelect.value : '';
-            }
-
-            total += itemTotal;
-            orderedItems.push({
-              ...item,
-              quantity: qty,
-              itemTotal,
-              spicyLevel
-            });
-          }
-        }
-      });
-
-      if (!hasItem) {
-        return showError('请至少选择一个菜品的数量');
+      if (cart.length === 0) {
+        return showError('购物车为空，请先添加至少一份菜品');
       }
+
+      let total = 0;
+      cart.forEach(item => {
+        total += item.price * item.quantity;
+      });
 
       const dateStr = orderDate.replace(/-/g, '');
       const key = 'orderCount_' + dateStr;
@@ -915,18 +1166,27 @@
       }
 
       itemsSummaryEl.innerHTML = '';
-      orderedItems.forEach(item => {
-        const spicyText = item.spicy ? `（${item.spicyLevel}）` : '';
+      cart.forEach(item => {
+        const dishInfo = menuItems.find(m => m.id === item.id);
+        const spicyText = dishInfo && dishInfo.spicy && item.spicyLevel
+          ? `（${item.spicyLevel}）` : '';
         const li = document.createElement('li');
-        li.textContent = `${item.name}${spicyText} × ${item.quantity} = CAD $${item.itemTotal.toFixed(2)}`;
+        li.textContent = `${item.name}${spicyText} × ${item.quantity} = CAD $${(item.price * item.quantity).toFixed(2)}`;
         itemsSummaryEl.appendChild(li);
       });
+      if (remark) {
+        const li = document.createElement('li');
+        li.textContent = `备注：${remark}`;
+        itemsSummaryEl.appendChild(li);
+      }
 
       resultBox.style.display = 'block';
 
       hasSubmitted = true;
       submitBtn.disabled = true;
       submitBtn.textContent = '已提交（如需再次下单请刷新页面）';
+
+      // 这里未来可以加：把订单发送到 Google Sheet / 后端
     });
 
     function showError(msg) {
