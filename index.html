@@ -5,109 +5,281 @@
   <title>MSL 预订单</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    :root {
+      --primary: #f97316;
+      --primary-dark: #ea580c;
+      --accent-red: #ef4444;
+      --bg: #0f172a;
+      --card-bg: #020617;
+      --text-main: #f9fafb;
+      --text-sub: #9ca3af;
+      --border-sub: #1f2937;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
       margin: 0;
       padding: 16px;
-      background: #f5f5f5;
+      background: radial-gradient(circle at top, #1f2933 0, #020617 60%);
+      color: var(--text-main);
     }
-    .container {
-      max-width: 900px;
+
+    .page-wrap {
+      max-width: 980px;
       margin: 0 auto;
-      background: #fff;
-      border-radius: 16px;
-      padding: 20px 18px 28px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
     }
+
+    .container {
+      background: linear-gradient(135deg, rgba(15,23,42,0.96), rgba(15,23,42,0.98));
+      border-radius: 24px;
+      padding: 18px 18px 26px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.55);
+      border: 1px solid rgba(148,163,184,0.2);
+    }
+
+    .header {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 18px;
+      align-items: center;
+    }
+
+    .logo-wrap {
+      width: 64px;
+      height: 64px;
+      border-radius: 20px;
+      background: radial-gradient(circle at 30% 10%, #fed7aa, #f97316 28%, #7f1d1d 80%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(248,113,113,0.5);
+      flex-shrink: 0;
+    }
+    .logo-inner {
+      width: 80%;
+      height: 80%;
+      border-radius: 18px;
+      border: 1px solid rgba(254,249,195,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fefce8;
+      text-shadow: 0 0 6px rgba(0,0,0,0.5);
+    }
+
     h1 {
       margin: 0 0 4px;
       font-size: 24px;
+      letter-spacing: 0.03em;
     }
+
     .sub-title {
       font-size: 13px;
-      color: #6b7280;
-      margin-bottom: 16px;
+      color: var(--text-sub);
     }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .chip {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      color: #e5e7eb;
+      background: rgba(15,23,42,0.8);
+    }
+
     h2 {
-      font-size: 18px;
+      font-size: 17px;
       margin: 0 0 8px;
     }
+
     .section {
       margin-bottom: 22px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid #eee;
+      padding-bottom: 18px;
+      border-bottom: 1px dashed rgba(55,65,81,0.7);
     }
     .section:last-child {
       border-bottom: none;
       padding-bottom: 0;
       margin-bottom: 0;
     }
+
+    .step-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-sub);
+      margin-bottom: 3px;
+    }
+    .step-circle {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: rgba(248,113,113,0.18);
+      border: 1px solid rgba(248,113,113,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fecaca;
+    }
+
     label {
       display: block;
       margin-bottom: 6px;
       font-weight: 600;
-      font-size: 14px;
+      font-size: 13px;
     }
+
     input[type="date"],
     input[type="time"],
     input[type="text"],
     input[type="tel"],
-    textarea {
+    textarea,
+    select {
       width: 100%;
       padding: 8px 10px;
-      border-radius: 8px;
-      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      border: 1px solid rgba(75,85,99,0.9);
       box-sizing: border-box;
       font-size: 14px;
+      background: rgba(15,23,42,0.9);
+      color: var(--text-main);
+    }
+    input::placeholder,
+    textarea::placeholder {
+      color: rgba(148,163,184,0.8);
     }
     input:focus, textarea:focus, select:focus {
       outline: none;
-      border-color: #f97316;
-      box-shadow: 0 0 0 1px rgba(249,115,22,0.3);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px rgba(249,115,22,0.4);
     }
     textarea {
       resize: vertical;
       min-height: 60px;
     }
+
     .two-col {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 12px;
     }
+
+    .hint {
+      font-size: 12px;
+      color: var(--text-sub);
+      margin-top: 4px;
+    }
+
+    .menu-group-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin: 10px 0 6px;
+      color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .menu-group-tag {
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      color: #f97316;
+    }
+
     .menu-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       grid-gap: 12px;
     }
+
     .menu-item {
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 10px;
+      border-radius: 16px;
+      padding: 8px 8px 10px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      background: #fcfcfc;
+      background: radial-gradient(circle at top left, rgba(248,250,252,0.02), rgba(15,23,42,0.96));
+      border: 1px solid rgba(55,65,81,0.8);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.45);
     }
-    .menu-header {
+
+    .menu-img {
+      width: 100%;
+      height: 130px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      background: radial-gradient(circle at 20% 0, #fed7aa, #7f1d1d 60%, #020617 100%);
+      position: relative;
+    }
+    .menu-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .menu-img-placeholder {
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: rgba(255,255,255,0.8);
+      background: linear-gradient(135deg, rgba(15,23,42,0.1), rgba(15,23,42,0.7));
+      backdrop-filter: blur(2px);
+    }
+
+    .menu-header {
+      display: flex;
+      align-items: flex-start;
       justify-content: space-between;
       margin-bottom: 4px;
+      gap: 8px;
     }
     .menu-name {
       font-weight: 600;
       font-size: 14px;
+      line-height: 1.3;
     }
     .menu-price {
-      color: #e67e22;
-      font-weight: 600;
+      color: #fecaca;
+      font-weight: 700;
       font-size: 14px;
+      white-space: nowrap;
     }
-    .menu-category {
+
+    .menu-tags {
       font-size: 11px;
-      color: #9ca3af;
+      color: var(--text-sub);
+      margin-bottom: 4px;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .tag-spicy {
+      color: #f97316;
+    }
+
+    .menu-desc {
+      font-size: 11px;
+      color: var(--text-sub);
       margin-bottom: 4px;
     }
+
     .qty-row {
       display: flex;
       align-items: center;
@@ -120,8 +292,11 @@
       width: 80px;
       padding: 4px 6px;
       border-radius: 8px;
-      border: 1px solid #d1d5db;
+      border: 1px solid rgba(75,85,99,0.9);
+      background: rgba(15,23,42,0.9);
+      color: var(--text-main);
     }
+
     .spicy-row {
       display: flex;
       align-items: center;
@@ -134,46 +309,47 @@
       flex: 1;
       padding: 4px 6px;
       border-radius: 8px;
-      border: 1px solid #d1d5db;
+      border: 1px solid rgba(75,85,99,0.9);
+      background: rgba(15,23,42,0.9);
+      color: var(--text-main);
       font-size: 13px;
     }
-    .hint {
-      font-size: 12px;
-      color: #9ca3af;
-      margin-top: 4px;
-    }
+
     .btn {
       display: inline-block;
-      padding: 11px 20px;
+      padding: 12px 22px;
       border: none;
       border-radius: 999px;
       font-size: 15px;
       cursor: pointer;
-      background: linear-gradient(135deg, #fb923c, #ef4444);
+      background: linear-gradient(135deg, var(--primary), var(--accent-red));
       color: #fff;
       font-weight: 600;
       text-align: center;
-      box-shadow: 0 8px 18px rgba(248,113,113,0.35);
+      box-shadow: 0 10px 24px rgba(248,113,113,0.6);
+      letter-spacing: 0.03em;
     }
     .btn:active {
       transform: translateY(1px);
-      box-shadow: 0 4px 10px rgba(248,113,113,0.35);
+      box-shadow: 0 6px 16px rgba(248,113,113,0.55);
     }
     .btn:disabled {
       opacity: 0.6;
       cursor: not-allowed;
       box-shadow: none;
     }
+
     .error {
-      color: #b91c1c;
+      color: #fecaca;
       font-size: 13px;
       margin-top: 8px;
     }
+
     .result-box {
-      background: #f9fafb;
-      border-radius: 12px;
+      background: radial-gradient(circle at top left, rgba(34,197,94,0.2), rgba(15,23,42,0.98));
+      border-radius: 16px;
       padding: 14px 14px 10px;
-      border: 1px solid #e5e7eb;
+      border: 1px solid rgba(34,197,94,0.5);
       margin-top: 14px;
       font-size: 14px;
     }
@@ -182,12 +358,24 @@
     }
     .highlight {
       font-weight: 700;
-      color: #111827;
+      color: #fef9c3;
     }
     .small {
       font-size: 13px;
-      color: #6b7280;
+      color: #e5e7eb;
     }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(250,204,21,0.1);
+      color: #facc15;
+      border: 1px solid rgba(250,204,21,0.6);
+      margin-left: 6px;
+    }
+
     .items-summary {
       font-size: 14px;
       margin-top: 8px;
@@ -196,119 +384,156 @@
       margin: 4px 0 0;
       padding-left: 20px;
     }
-    .badge {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 11px;
-      background: #fef3c7;
-      color: #92400e;
-      margin-left: 6px;
-    }
-    .group-title {
-      font-size: 13px;
-      font-weight: 600;
-      margin: 10px 0 4px;
-      color: #4b5563;
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 16px 12px 22px;
+      }
+      h1 {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>MSL 预订单</h1>
-    <div class="sub-title">
-      请选择取餐日期与菜品，提交后根据页面提示完成 EMT 支付。
-    </div>
-
-    <!-- 1. 取餐信息 -->
-    <div class="section">
-      <h2>1. 取餐信息</h2>
-      <div class="two-col">
-        <div>
-          <label for="orderDate">取餐日期（必填）</label>
-          <input type="date" id="orderDate">
-          <div class="hint">请选择您计划取餐的日期。</div>
+  <div class="page-wrap">
+    <div class="container">
+      <!-- 顶部 LOGO + 文案 -->
+      <div class="header">
+        <div class="logo-wrap">
+          <div class="logo-inner">MSL</div>
         </div>
         <div>
-          <label for="pickupTime">取餐时间（可选）</label>
-          <input type="time" id="pickupTime">
-          <div class="hint">例如：18:30，如有变动以客服通知为准。</div>
+          <h1>MSL 预订单</h1>
+          <div class="sub-title">
+            提前预订 · 现场取餐 · EMT 支付
+          </div>
+          <div class="chips">
+            <span class="chip">三格便当 · 金汤汤锅</span>
+            <span class="chip">炒饭套餐 · 小食 / 汤类</span>
+            <span class="chip">以收到 EMT + 客服确认为准</span>
+          </div>
         </div>
       </div>
-      <div class="two-col" style="margin-top: 12px;">
-        <div>
-          <label for="customerName">昵称（必填）</label>
-          <input type="text" id="customerName" placeholder="例如：小王 / 小红">
+
+      <!-- 1. 取餐信息 -->
+      <div class="section">
+        <div class="step-tag">
+          <div class="step-circle">1</div> 填写取餐信息
         </div>
-        <div>
-          <label for="customerPhone">联系电话（可选，方便现场联系）</label>
-          <input type="tel" id="customerPhone" placeholder="例如：647-000-0000">
+        <h2>取餐信息</h2>
+        <div class="two-col">
+          <div>
+            <label for="orderDate">取餐日期（必填）</label>
+            <input type="date" id="orderDate">
+            <div class="hint">请选择计划取餐的日期。</div>
+          </div>
+          <div>
+            <label for="pickupTime">取餐时间（可选）</label>
+            <input type="time" id="pickupTime">
+            <div class="hint">例如 18:30，如有变动以客服通知为准。</div>
+          </div>
+        </div>
+        <div class="two-col" style="margin-top: 12px;">
+          <div>
+            <label for="customerName">昵称（必填）</label>
+            <input type="text" id="customerName" placeholder="例如：小王 / 小红">
+          </div>
+          <div>
+            <label for="customerPhone">联系电话（可选，方便现场联系）</label>
+            <input type="tel" id="customerPhone" placeholder="例如：647-000-0000">
+          </div>
+        </div>
+        <div style="margin-top: 12px;">
+          <label for="wechatId">微信号（必填，方便与客服沟通）</label>
+          <input type="text" id="wechatId" placeholder="请输入常用微信号">
         </div>
       </div>
-      <div style="margin-top: 12px;">
-        <label for="wechatId">微信号（必填，方便与客服沟通）</label>
-        <input type="text" id="wechatId" placeholder="请输入常用微信号">
+
+      <!-- 2. 菜单选择 -->
+      <div class="section">
+        <div class="step-tag">
+          <div class="step-circle">2</div> 选择菜品与辣度
+        </div>
+        <h2>菜品选择</h2>
+        <div class="hint">
+          三格便当 / 金汤系列 / 炒饭套餐 / 小食均可选择辣度（不辣 / 正常辣 / 加辣），汤类无需选择辣度。
+        </div>
+
+        <div class="menu-group-title">
+          🍱 三格便当类（主菜 + 番茄炒蛋 + 米饭）
+          <span class="menu-group-tag">Combination Plates</span>
+        </div>
+        <div class="menu-list" id="menuListBento"></div>
+
+        <div class="menu-group-title">
+          🍲 金汤系列（汤锅 + 米饭）
+          <span class="menu-group-tag">Golden Soup Entrées</span>
+        </div>
+        <div class="menu-list" id="menuListGolden"></div>
+
+        <div class="menu-group-title">
+          🍛 炒饭套餐（炒饭 + 汤）
+          <span class="menu-group-tag">Fried Rice Combos</span>
+        </div>
+        <div class="menu-list" id="menuListFried"></div>
+
+        <div class="menu-group-title">
+          🥗 小食 / 加购
+          <span class="menu-group-tag">Side Dish / Add-ons</span>
+        </div>
+        <div class="menu-list" id="menuListSide"></div>
+
+        <div class="menu-group-title">
+          🍲 汤类（单点）
+          <span class="menu-group-tag">Soup (A La Carte)</span>
+        </div>
+        <div class="menu-list" id="menuListSoup"></div>
       </div>
-    </div>
 
-    <!-- 2. 菜单选择 -->
-    <div class="section">
-      <h2>2. 选择菜品与数量</h2>
-      <div class="hint">
-        所有菜品均可选择辣度（不辣 / 正常辣 / 加辣）。饮料仅选择数量即可。
+      <!-- 3. 备注 -->
+      <div class="section">
+        <div class="step-tag">
+          <div class="step-circle">3</div> 填写备注并提交
+        </div>
+        <h2>备注特殊要求</h2>
+        <label for="remark">备注</label>
+        <textarea id="remark" placeholder="例如：米饭少一点 / 不要花生 / 分开放辣椒 / 各份写上昵称等"></textarea>
       </div>
-      <div id="group-fan" class="group-title">盖饭类</div>
-      <div class="menu-list" id="menuListMain"></div>
 
-      <div id="group-friedrice" class="group-title">炒饭类</div>
-      <div class="menu-list" id="menuListRice"></div>
+      <!-- 4. 提交 & 结果 -->
+      <div class="section">
+        <button class="btn" id="submitBtn">提交订单</button>
+        <div class="error" id="errorMsg" style="display:none;"></div>
 
-      <div id="group-snack" class="group-title">小食</div>
-      <div class="menu-list" id="menuListSnack"></div>
-
-      <div id="group-drinks" class="group-title">饮料</div>
-      <div class="menu-list" id="menuListDrinks"></div>
-    </div>
-
-    <!-- 3. 备注 -->
-    <div class="section">
-      <h2>3. 备注特殊要求</h2>
-      <label for="remark">备注</label>
-      <textarea id="remark" placeholder="例如：米饭少一点 / 不要花生 / 各份分开打包等"></textarea>
-    </div>
-
-    <!-- 4. 提交 & 结果 -->
-    <div class="section">
-      <button class="btn" id="submitBtn">提交订单</button>
-      <div class="error" id="errorMsg" style="display:none;"></div>
-
-      <div id="result" style="display:none;" class="result-box">
-        <div class="result-row">
-          ✅ 订单提交成功！<span class="badge">请在 30 分钟内完成 EMT</span>
-        </div>
-        <div class="result-row">
-          订单号：<span class="highlight" id="orderNo"></span>
-        </div>
-        <div class="result-row">
-          取餐日期：<span class="highlight" id="orderDateShow"></span>
-          <span id="pickupTimeShowWrapper" style="display:none;"> ｜ 取餐时间：<span class="highlight" id="pickupTimeShow"></span></span>
-        </div>
-        <div class="result-row">
-          订单总金额：<span class="highlight" id="totalAmount"></span>
-        </div>
-        <div class="result-row">
-          <!-- TODO：改成你的 EMT 邮箱 -->
-          请 EMT 至：<span class="highlight" id="emtEmail">your-emt-email@example.com</span>
-        </div>
-        <div class="result-row small">
-          👉 EMT 备注请填写订单号：<span class="highlight" id="orderNoForEmt"></span>
-        </div>
-        <div class="result-row small">
-          ⚠️ 订单仅在本店收到 EMT 付款并通过微信 / 电话与您确认后才视为有效。如 30 分钟内未付款，预订单将自动作废。
-        </div>
-        <div class="items-summary">
-          <div>本单菜品：</div>
-          <ul id="itemsSummary"></ul>
+        <div id="result" style="display:none;" class="result-box">
+          <div class="result-row">
+            ✅ 预订单已提交！<span class="badge">请在 30 分钟内完成 EMT</span>
+          </div>
+          <div class="result-row">
+            订单号：<span class="highlight" id="orderNo"></span>
+          </div>
+          <div class="result-row">
+            取餐日期：<span class="highlight" id="orderDateShow"></span>
+            <span id="pickupTimeShowWrapper" style="display:none;"> ｜ 取餐时间：<span class="highlight" id="pickupTimeShow"></span></span>
+          </div>
+          <div class="result-row">
+            订单总金额：<span class="highlight" id="totalAmount"></span>
+          </div>
+          <div class="result-row">
+            <!-- TODO：改成你的 EMT 邮箱 -->
+            请 EMT 至：<span class="highlight" id="emtEmail">your-emt-email@example.com</span>
+          </div>
+          <div class="result-row small">
+            👉 EMT 备注请填写订单号：<span class="highlight" id="orderNoForEmt"></span>
+          </div>
+          <div class="result-row small">
+            ⚠️ 订单仅在本店收到 EMT 付款并通过微信 / 电话与您确认后才视为有效。如 30 分钟内未付款，预订单将自动作废。
+          </div>
+          <div class="items-summary">
+            <div>本单菜品：</div>
+            <ul id="itemsSummary"></ul>
+          </div>
         </div>
       </div>
     </div>
@@ -316,91 +541,273 @@
 
   <script>
     // ================================
-    // 菜单数据
+    // 菜单数据（按你给的最终版菜单）
+    // spicy: true = 可选辣度；false = 不选辣度（汤类）
+    // kcal / desc 用于展示，不影响价格
+    // imageUrl 将来可加图片地址
     // ================================
-    // spicy: true 表示可以选择辣度；false 表示饮料等不选辣度
     const menuItems = [
-      // 盖饭类
-      { id: 1, category: 'fan', name: '孟获番茄蛋盖饭', price: 14.99, spicy: true },
-      { id: 2, category: 'fan', name: '宫保鸡丁盖饭', price: 15.99, spicy: true },
-      { id: 3, category: 'fan', name: '农家小炒肉盖饭', price: 15.99, spicy: true },
-      { id: 4, category: 'fan', name: '酸豆角鸡杂盖饭', price: 16.99, spicy: true },
-      { id: 5, category: 'fan', name: '酸豆角肉沫盖饭', price: 16.99, spicy: true },
-      { id: 6, category: 'fan', name: '乌笋小炒肉盖饭', price: 16.99, spicy: true },
-      { id: 7, category: 'fan', name: '鱼香茄子盖饭', price: 14.99, spicy: true },
-      { id: 8, category: 'fan', name: '尖椒肥肠盖饭', price: 15.99, spicy: true },
-      { id: 9, category: 'fan', name: '糖醋鱼柳盖饭', price: 15.99, spicy: true },
-      { id: 10, category: 'fan', name: '金汤酸菜比豆腐嫩的鱼+米饭', price: 17.99, spicy: true },
-      { id: 11, category: 'fan', name: '金汤酸菜肥牛+米饭', price: 17.99, spicy: true },
+      // 🍱 三格便当类（主菜 + 番茄炒蛋 + 米饭）
+      {
+        id: 1,
+        category: 'bento',
+        name: '农家小炒肉 + 西红柿鸡蛋',
+        price: 16.99,
+        spicy: true,
+        kcal: 833,
+        desc: 'Pork, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: ''
+      },
+      {
+        id: 2,
+        category: 'bento',
+        name: '宫保鸡丁 + 西红柿鸡蛋',
+        price: 16.99,
+        spicy: true,
+        kcal: 815,
+        desc: 'Chicken, Peanuts, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: ''
+      },
+      {
+        id: 3,
+        category: 'bento',
+        name: '鱼香茄子 + 西红柿鸡蛋',
+        price: 15.99,
+        spicy: true,
+        kcal: 720,
+        desc: 'Eggplant, Wood Ear Mushroom, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: ''
+      },
+      {
+        id: 4,
+        category: 'bento',
+        name: '川椒鸡翅 + 西红柿鸡蛋',
+        price: 18.99,
+        spicy: true,
+        kcal: 850,
+        desc: 'Chicken Wings, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: ''
+      },
+      {
+        id: 5,
+        category: 'bento',
+        name: '尖椒肥肠 + 西红柿鸡蛋',
+        price: 16.99,
+        spicy: true,
+        kcal: 820,
+        desc: 'Pork Intestine, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: ''
+      },
+      {
+        id: 6,
+        category: 'bento',
+        name: '酸豆角炒肉末 + 西红柿鸡蛋',
+        price: 17.99,
+        spicy: true,
+        kcal: 738,
+        desc: 'Minced Pork, Pickled Green Beans, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: ''
+      },
+      {
+        id: 7,
+        category: 'bento',
+        name: '洋葱肥牛 + 西红柿鸡蛋',
+        price: 18.99,
+        spicy: true,
+        kcal: 890,
+        desc: 'Beef Slices, Onion, Mixed Vegetables, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: ''
+      },
+      {
+        id: 8,
+        category: 'bento',
+        name: '肉食主义 + 西红柿鸡蛋',
+        price: 18.99,
+        spicy: true,
+        kcal: 910,
+        desc: 'Meat Balls, Pork Intestine, Spam, Beef Tripe, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: ''
+      },
+      {
+        id: 9,
+        category: 'bento',
+        name: '香辣四喜 + 西红柿鸡蛋',
+        price: 18.99,
+        spicy: true,
+        kcal: 810,
+        desc: 'Shrimp, Pork Rib, Beef Sirloin, Lamb Cube, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: ''
+      },
+      {
+        id: 10,
+        category: 'bento',
+        name: '糖醋鱼柳 + 西红柿鸡蛋',
+        price: 16.99,
+        spicy: true,
+        kcal: 750,
+        desc: 'Fried Fish Fillet, Sweet & Sour Sauce, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: ''
+      },
+      {
+        id: 11,
+        category: 'bento',
+        name: '麻婆豆腐 + 西红柿鸡蛋',
+        price: 15.99,
+        spicy: true,
+        kcal: 719,
+        desc: 'Minced Pork, Tofu, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+        imageUrl: ''
+      },
 
-      // 炒饭类
-      { id: 12, category: 'friedrice', name: '蒜薹腊肉炒饭', price: 13.00, spicy: true },
-      { id: 13, category: 'friedrice', name: '那一年蛋炒饭', price: 13.00, spicy: true },
-      { id: 14, category: 'friedrice', name: '菠萝鸡粒炒饭', price: 13.00, spicy: true },
+      // 🍲 金汤系列（汤锅 + 米饭）
+      {
+        id: 12,
+        category: 'golden',
+        name: '金汤酸菜鱼 + 米饭',
+        price: 18.49,
+        spicy: true,
+        kcal: 860,
+        desc: 'Fish Fillet, Enoki Mushroom, Glass Noodles, Golden Pickled Cabbage Soup, Rice, etc.',
+        imageUrl: ''
+      },
+      {
+        id: 13,
+        category: 'golden',
+        name: '金汤酸菜肥牛 + 米饭',
+        price: 18.49,
+        spicy: true,
+        kcal: 870,
+        desc: 'Beef Slices, Enoki Mushroom, Glass Noodles, Golden Pickled Cabbage Soup, Rice, etc.',
+        imageUrl: ''
+      },
 
-      // 小食
-      { id: 15, category: 'snack', name: '凉拌土豆丝（小份）+ 任意 POP', price: 2.69, spicy: true },
+      // 🍛 炒饭套餐（炒饭 + 汤）
+      {
+        id: 14,
+        category: 'fried',
+        name: '咖喱牛肉炒饭 + 冬瓜虾仁汤',
+        price: 16.0,
+        spicy: true,
+        kcal: 854,
+        desc: 'Curry Beef Fried Rice + Winter Melon Shrimp Soup.',
+        imageUrl: ''
+      },
+      {
+        id: 15,
+        category: 'fried',
+        name: '那一年蛋炒饭 + 冬瓜虾仁汤',
+        price: 16.0,
+        spicy: true,
+        kcal: 754,
+        desc: 'Classic Fried Rice + Winter Melon Shrimp Soup.',
+        imageUrl: ''
+      },
 
-      // 饮料
-      { id: 16, category: 'drinks', name: '可乐', price: 1.99, spicy: false },
-      { id: 17, category: 'drinks', name: '无糖可乐', price: 1.99, spicy: false },
-      { id: 18, category: 'drinks', name: '雪碧', price: 1.99, spicy: false },
-      { id: 19, category: 'drinks', name: 'Canada Dry', price: 1.99, spicy: false },
-      { id: 20, category: 'drinks', name: '康师傅冰红茶', price: 3.50, spicy: false }
+      // 🥗 小食 / 加购
+      {
+        id: 16,
+        category: 'side',
+        name: '凉拌土豆丝 + POP',
+        price: 3.0,
+        spicy: true,
+        kcal: 430,
+        desc: 'Shredded Potatoes, Chili Peppers, Green Onions, soft drink, etc.',
+        imageUrl: ''
+      },
+
+      // 🍲 汤类（单点）
+      {
+        id: 17,
+        category: 'soup',
+        name: '冬瓜虾仁汤（12oz）',
+        price: 3.99,
+        spicy: false,
+        kcal: 94,
+        desc: 'Winter Melon & Shrimp Soup.',
+        imageUrl: ''
+      }
     ];
 
     // TODO：改成你的真实 EMT 邮箱
-    const EMT_EMAIL = "corinna29@live.ca";
+    const EMT_EMAIL = "your-emt-email@example.com";
 
-    const menuListMainEl = document.getElementById('menuListMain');
-    const menuListRiceEl = document.getElementById('menuListRice');
-    const menuListSnackEl = document.getElementById('menuListSnack');
-    const menuListDrinksEl = document.getElementById('menuListDrinks');
+    // 防止同一页面重复提交
+    let hasSubmitted = false;
+
+    const menuListBentoEl = document.getElementById('menuListBento');
+    const menuListGoldenEl = document.getElementById('menuListGolden');
+    const menuListFriedEl = document.getElementById('menuListFried');
+    const menuListSideEl = document.getElementById('menuListSide');
+    const menuListSoupEl = document.getElementById('menuListSoup');
 
     function renderMenuForCategory(category, containerEl) {
       containerEl.innerHTML = '';
-      menuItems.filter(item => item.category === category).forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'menu-item';
+      menuItems
+        .filter(item => item.category === category)
+        .forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'menu-item';
 
-        const spicyHtml = item.spicy ? `
-          <div class="spicy-row">
-            <span>辣度：</span>
-            <select data-spicy-id="${item.id}">
-              <option value="不辣">不辣</option>
-              <option value="正常辣" selected>正常辣</option>
-              <option value="加辣">加辣</option>
-            </select>
-          </div>
-        ` : '';
-
-        div.innerHTML = `
-          <div>
-            <div class="menu-header">
-              <div class="menu-name">${item.name}</div>
-              <div class="menu-price">CAD $${item.price.toFixed(2)}</div>
+          const imgHtml = `
+            <div class="menu-img">
+              ${item.imageUrl
+                ? `<img src="${item.imageUrl}" alt="${item.name}">`
+                : `<div class="menu-img-placeholder">菜品图片占位（可后期替换为真实照片）</div>`
+              }
             </div>
-          </div>
-          <div class="qty-row">
-            <span>数量（份）：</span>
-            <input type="number" min="0" max="20" value="0" data-id="${item.id}">
-          </div>
-          ${spicyHtml}
-        `;
-        containerEl.appendChild(div);
-      });
+          `;
+
+          const spicyTags = item.spicy
+            ? `<span class="tag-spicy">可选辣度</span><span>${item.kcal} Kcal</span>`
+            : `<span>无辣度</span><span>${item.kcal} Kcal</span>`;
+
+          const spicyHtml = item.spicy ? `
+            <div class="spicy-row">
+              <span>辣度：</span>
+              <select data-spicy-id="${item.id}">
+                <option value="不辣">不辣</option>
+                <option value="正常辣" selected>正常辣</option>
+                <option value="加辣">加辣</option>
+              </select>
+            </div>
+          ` : '';
+
+          div.innerHTML = `
+            ${imgHtml}
+            <div>
+              <div class="menu-header">
+                <div class="menu-name">${item.name}</div>
+                <div class="menu-price">CAD $${item.price.toFixed(2)}</div>
+              </div>
+              <div class="menu-tags">
+                ${spicyTags}
+              </div>
+              <div class="menu-desc">
+                ${item.desc}
+              </div>
+              <div class="qty-row">
+                <span>数量（份）：</span>
+                <input type="number" min="0" max="20" value="0" data-id="${item.id}">
+              </div>
+              ${spicyHtml}
+            </div>
+          `;
+
+          containerEl.appendChild(div);
+        });
     }
 
     function renderAllMenus() {
-      renderMenuForCategory('fan', menuListMainEl);
-      renderMenuForCategory('friedrice', menuListRiceEl);
-      renderMenuForCategory('snack', menuListSnackEl);
-      renderMenuForCategory('drinks', menuListDrinksEl);
+      renderMenuForCategory('bento', menuListBentoEl);
+      renderMenuForCategory('golden', menuListGoldenEl);
+      renderMenuForCategory('fried', menuListFriedEl);
+      renderMenuForCategory('side', menuListSideEl);
+      renderMenuForCategory('soup', menuListSoupEl);
     }
 
     renderAllMenus();
 
-    // 默认日期设为明天（暂时先保留这个逻辑）
+    // 默认日期设为明天（暂时保留）
     (function setDefaultDate() {
       const dateInput = document.getElementById('orderDate');
       const d = new Date();
@@ -412,7 +819,7 @@
     })();
 
     // ================================
-    // 提交订单逻辑
+    // 提交订单逻辑（含防重复提交）
     // ================================
     const submitBtn = document.getElementById('submitBtn');
     const errorMsg = document.getElementById('errorMsg');
@@ -431,6 +838,12 @@
     submitBtn.addEventListener('click', function () {
       errorMsg.style.display = 'none';
       resultBox.style.display = 'none';
+
+      // 防止同一页面多次提交
+      if (hasSubmitted) {
+        showError('本页面已成功提交一份预订单，如需再次下单请刷新页面或重新打开链接。');
+        return;
+      }
 
       const orderDate = document.getElementById('orderDate').value;
       const pickupTime = document.getElementById('pickupTime').value;
@@ -488,7 +901,7 @@
       });
 
       if (!hasItem) {
-        return showError('请至少选择一个菜品或饮料的数量');
+        return showError('请至少选择一个菜品的数量');
       }
 
       // 生成订单号（本地：日期 + 当日序号）
@@ -514,15 +927,20 @@
 
       itemsSummaryEl.innerHTML = '';
       orderedItems.forEach(item => {
-        const li = document.createElement('li');
         const spicyText = item.spicy ? `（${item.spicyLevel}）` : '';
+        const li = document.createElement('li');
         li.textContent = `${item.name}${spicyText} × ${item.quantity} = CAD $${item.itemTotal.toFixed(2)}`;
         itemsSummaryEl.appendChild(li);
       });
 
       resultBox.style.display = 'block';
 
-      // 未来如果要写入 Google Sheet / 后端，可以在这里组装 payload 发送
+      // 锁住按钮，防止重复提交
+      hasSubmitted = true;
+      submitBtn.disabled = true;
+      submitBtn.textContent = '已提交（如需再次下单请刷新页面）';
+
+      // 将来如果接 Google Sheet / 后端，这里可以发 payload
       // const payload = { orderNo, orderDate, pickupTime, nickName, phone, wechatId, total, items: orderedItems };
     });
 
@@ -533,3 +951,5 @@
   </script>
 </body>
 </html>
+
+
