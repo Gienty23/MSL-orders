@@ -217,31 +217,42 @@
     }
 
     .menu-img {
-      width: 100%;
-      height: 130px;
-      border-radius: 12px;
-      overflow: hidden;
-      margin-bottom: 8px;
-      background: radial-gradient(circle at 20% 0, #fed7aa, #7f1d1d 60%, #020617 100%);
-      position: relative;
-    }
-    .menu-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .menu-img-placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: rgba(255,255,255,0.8);
-      background: linear-gradient(135deg, rgba(15,23,42,0.1), rgba(15,23,42,0.7));
-      backdrop-filter: blur(2px);
-    }
+  width: 100%;
+  aspect-ratio: 1 / 1;         /* 正方形 */
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, rgba(15,23,42,0.1), rgba(15,23,42,0.7));
+  position: relative;
+}
+
+/* 图片不变形，只裁剪多余部分 */
+.menu-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;           /* 关键：像你参考图一样铺满 */
+  display: block;
+}
+
+/* 占位图 */
+.menu-img-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: rgba(255,255,255,0.8);
+  background: linear-gradient(135deg, rgba(15,23,42,0.1), rgba(15,23,42,0.7));
+  backdrop-filter: blur(2px);
+}
+
+/* 让卡片更宽一点 */
+.menu-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* 原本是 250px */
+  grid-gap: 12px;
+}
 
     .menu-header {
       display: flex;
@@ -599,11 +610,11 @@
       {
         id: 7,
         category: 'bento',
-        name: '洋葱肥牛 + 西红柿鸡蛋',
+        name: '照烧肥牛 + 西红柿鸡蛋',
         price: 18.99,
         spicy: true,
         kcal: 890,
-        desc: 'Beef Slices, Onion, Mixed Vegetables, Tomatoes & Eggs, Rice, etc.',
+        desc: 'Teriyaki Beef, Onion, Mixed Vegetables, Tomatoes & Eggs, Rice, etc.',
         imageUrl: './images/金汤酸菜肥牛.png' // 暂用
       },
       {
@@ -925,6 +936,7 @@
   </script>
 </body>
 </html>
+
 
 
 
