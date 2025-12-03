@@ -1179,51 +1179,140 @@
   submitBtn.disabled = true;
   submitBtn.textContent = '已提交（如需再次下单请刷新页面）';
 
-  // ✅ 这里把订单发给 Google Sheet
-  const payload = {
-    order: {
-      orderId: orderNo,
-      nickname: nickName,
-      phone: phone,
-      wechat: wechatId,
-      date: orderDate,
-      pickupTime: pickupTime || '',
-      comment: remark || ''
-    },
-    items: cart.map(item => {
-      const dishInfo = menuItems.find(m => m.id === item.id);
-      const isSpicy = dishInfo && dishInfo.spicy;
-      return {
-        name: item.name,
-        spicy: isSpicy ? (item.spicyLevel || '默认') : '无辣度',
-        qty: item.quantity
-      };
-    })
-  };
-  // 异步发送，不影响前端展示（no-cors 避免被浏览器拦截）
-  fetch(SHEET_API_URL, {
-    method: 'POST',
-    mode: 'no-cors',  // 关键：不走 CORS 校验
-    headers: {
-      'Content-Type': 'text/plain;charset=utf-8'  // 伪装成简单请求
-    },
-    body: JSON.stringify(payload)
-  })
-  .then(() => {
-    console.log('Sheet request sent (no-cors), cannot read response but POST should succeed.');
-  })
-  .catch(err => {
-    console.error('Sheet fetch error:', err);
-  });
+  // 提交订单
+    submitBtn.addEventListener('click', async function () { // 确保函数是 async
+  errorMsg.style.display = 'none';
+  resultBox.style.display = 'none';
 
-});  // 
+  if (hasSubmitted) {
+    showError('本页面已成功提交一份预订单，如需再次下单请刷新页面或重新打开链接。');
+    return;
+  }
 
-function showError(msg) {
-  errorMsg.textContent = msg;
-  errorMsg.style.display = 'block';
-}
+  // --- 数据收集 ---
+  const orderDate = document.getElementById('orderDate').value;
+  const pickupTime = document.getElementById('pickupTime').value;
+  const nickName = document.getElementById('customerName').value.trim();
+  const phone = document.getElementById('customerPhone').value.trim();
+  const wechatId = document.getElementById('wechatId').value.trim();
+  const remark = document.getElementById('remark').value.trim();
+
+  // --- 基础校验 ---
+  if (!orderDate) { return showError('请选择取餐日期'); }
+  const todayStr = new Date().toISOString().slice(0,10);
+  if (orderDate < todayStr) { return showError('取餐日期不能早于今天'); }
+  if (!nickName) { return showError('请填写昵称'); }
+  if (!wechatId) { return showError('请填写微信号，方便与客服沟通'); }
+  if (cart.length === 0) { return showError('购物车为空，请先添加至少一份菜品'); }
+
+  // --- 计算总金额 ---
+  let total = 0;
+  cart.forEach(item => {
+    total += item.price * item.quantity;
+  });
+  const totalAmount = total.toFixed(2);
+
+  // --- 生成订单号（和你的旧逻辑保持一致）---
+  const dateStr = orderDate.replace(/-/g, '');
+  const key = 'orderCount_' + dateStr;
+  const prevCount = parseInt(localStorage.getItem(key) || '0', 10);
+  const seq = prevCount + 1;
+  // ⚠️ 注意: 只有在 Apps Script 返回成功后，才更新 localStorage。
+  // 暂时不更新 localStorage，在提交成功后再更新。
+  const seqStr = String(seq).padStart(2, '0');
+  const orderNo = `${dateStr}-${seqStr}`;
+  
+  // --- 组装菜品详情和总览列表 ---
+  let itemsDetailArray = [];
+  itemsSummaryEl.innerHTML = '';
+  cart.forEach(item => {
+    const dishInfo = menuItems.find(m => m.id === item.id);
+    const spicyText = dishInfo && dishInfo.spicy && item.spicyLevel
+      ? `（${item.spicyLevel}）` : '';
+    
+    const itemStr = `${item.name}${spicyText} × ${item.quantity} = CAD $${(item.price * item.quantity).toFixed(2)}`;
+    itemsDetailArray.push(itemStr);
+
+    // 填充页面上的订单摘要列表
+    const li = document.createElement('li');
+    li.textContent = itemStr;
+    itemsSummaryEl.appendChild(li);
+  });
+  const itemsDetail = itemsDetailArray.join('; '); // 用分号分隔，方便 Sheet 单元格阅读
+  
+  // --- 构建要发送给 Apps Script 的数据 ---
+  const payload = {
+    orderNo: orderNo,
+    orderDate: orderDate,
+    pickupTime: pickupTime,
+    nickName: nickName,
+    phone: phone,
+    wechatId: wechatId,
+    totalAmount: totalAmount,
+    itemsDetail: itemsDetail,
+    remark: remark
+  };
+  
+  // 禁用按钮并显示加载状态
+  submitBtn.disabled = true;
+  submitBtn.textContent = '提交中...';
+  
+  try {
+    // --- 发送 POST 请求到 Google Apps Script ---
+    const response = await fetch(SHEET_API_URL, {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+  
+    const result = await response.json();
+  
+    if (result.result === "success") {
+      // 成功后执行：
+      hasSubmitted = true;
+      // 更新本地订单计数器
+      localStorage.setItem(key, seq.toString()); 
+
+      // 页面展示部分
+      orderNoEl.textContent = result.orderNo; // 使用 Apps Script 返回的订单号（虽然我们自己生成的）
+      orderNoForEmtEl.textContent = result.orderNo;
+      totalAmountEl.textContent = 'CAD $' + totalAmount;
+      orderDateShowEl.textContent = orderDate;
+      if (pickupTime) {
+        pickupTimeShowWrapper.style.display = 'inline';
+        pickupTimeShowEl.textContent = pickupTime;
+      } else {
+        pickupTimeShowWrapper.style.display = 'none';
+      }
+      
+      resultBox.style.display = 'block';
+      submitBtn.style.display = 'none'; // 成功后隐藏提交按钮
+    } else {
+      // Apps Script 返回了错误信息
+      showError('订单提交失败：' + (result.message || '未知错误'));
+      submitBtn.disabled = false;
+      submitBtn.textContent = '提交订单';
+    }
+  
+  } catch (err) {
+    console.error('网络请求错误:', err);
+    showError('订单提交失败：无法连接服务器或网络错误。');
+    submitBtn.disabled = false;
+    submitBtn.textContent = '提交订单';
+  }
+
+  function showError(message) {
+    errorMsg.textContent = message;
+    errorMsg.style.display = 'block';
+  }
+  });
 </script>
 </b
+
 
 
 
