@@ -1328,19 +1328,19 @@
     });
 
     // 生成订单号：YYYYMMDD-XX
-    const dateStr = orderDate.replace(/-/g, '');
-    const key = 'orderCount_' + dateStr;
-    const prevCount = parseInt(localStorage.getItem(key) || '0', 10);
-    const nextSeq = prevCount + 1;
-    const seqStr = String(nextSeq).padStart(2, '0');
-    const orderNo = `${dateStr}-${seqStr}`;
+    //const dateStr = orderDate.replace(/-/g, '');
+    //const key = 'orderCount_' + dateStr;
+    //const prevCount = parseInt(localStorage.getItem(key) || '0', 10);
+    //const nextSeq = prevCount + 1;
+    //const seqStr = String(nextSeq).padStart(2, '0');
+    //const orderNo = `${dateStr}-${seqStr}`;
 
     // 给后端的取餐时间（前端不展示）
     const pickupTime = PICKUP_TIME_DEFAULT;
 
     // 本地 UI 展示
-    orderNoEl.textContent = orderNo;
-    orderNoForEmtEl.textContent = orderNo;
+    //orderNoEl.textContent = orderNo;
+    //orderNoForEmtEl.textContent = orderNo;
     totalAmountEl.textContent = 'CAD $' + totalAmount.toFixed(2);
     orderDateShowEl.textContent = orderDate;
 
@@ -1415,6 +1415,7 @@
 </script>
 </body>
 </html>
+
 
 
 
