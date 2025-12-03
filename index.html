@@ -666,27 +666,42 @@
         <div class="error" id="errorMsg" style="display:none;"></div>
 
         <div id="result" style="display:none;" class="result-box">
-          <div class="result-row">
-            ✅ 小客服微信号 hotopiasc 预订单已提交！<span class="badge">当天内完成 EMT</span>
-          </div>
-          <div class="result-row">
-            订单号：<span class="highlight" id="orderNo"></span>
-          </div>
-          <div class="result-row">
-            取餐日期：<span class="highlight" id="orderDateShow"></span>
-          </div>
+  <div class="result-row">
+    ✅ 小客服微信号 hotopiasc 预订单已提交！<span class="badge">当天内完成 EMT</span>
+  </div>
+
+  <div class="result-row">
+    取餐日期：<span class="highlight" id="orderDateShow"></span>
+    <span id="pickupTimeShowWrapper" style="display:none;">
+      ｜ 取餐时间：<span class="highlight" id="pickupTimeShow"></span>
+    </span>
+  </div>
+
           <div class="result-row">
             订单总金额：<span class="highlight" id="totalAmount"></span>
           </div>
+        
           <div class="result-row">
             请 EMT 至：<span class="highlight" id="emtEmail">test@gmail.com</span>
           </div>
+        
           <div class="result-row small">
-            👉 EMT 备注请填写订单号：<span class="highlight" id="orderNoForEmt"></span>
+            📸 请截图保存本页作为下单凭证。
           </div>
           <div class="result-row small">
-            ⚠️ 订单仅在本店收到 EMT 付款并通过微信 / 电话与您确认后才视为有效。当天内未付款，预订单将自动作废。
+            💰 完成 EMT 付款后，请添加小客服微信 <span class="highlight">hotopiasc</span>，
+            发送「付款截图 + 本页截图」，小客服会回复您的<span class="highlight">取餐订单号</span>，
+            现场取餐报号即可。
           </div>
+          <div class="result-row small">
+            👉 EMT 备注建议填写：<span class="highlight">昵称 + 取餐日期</span>
+            （例如：小王 2025-12-13），方便后台核对。
+          </div>
+          <div class="result-row small">
+            ⚠️ 订单仅在本店收到 EMT 付款并通过微信 / 电话与您确认后才视为有效。
+            当天内未付款，预订单将自动作废。
+          </div>
+        
           <div class="items-summary">
             <div>本单菜品：</div>
             <ul id="itemsSummary"></ul>
@@ -1400,6 +1415,7 @@
 </script>
 </body>
 </html>
+
 
 
 
