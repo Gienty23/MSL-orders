@@ -134,7 +134,6 @@
     }
 
     input[type="date"],
-    input[type="time"],
     input[type="text"],
     input[type="tel"],
     textarea,
@@ -456,7 +455,7 @@
 
     .modal {
       width: 100%;
-      max-width: 360px;
+      max-width: 340px;
       background: #020617;
       border-radius: 18px;
       padding: 14px 16px 12px;
@@ -480,7 +479,7 @@
 
     .modal-row input[type="number"],
     .modal-row select {
-      max-width: 200px;
+      max-width: 160px;
       padding: 5px 8px;
       border-radius: 8px;
       border: 1px solid rgba(75,85,99,0.9);
@@ -531,7 +530,6 @@
   <div class="container">
     <div class="header">
       <div class="logo-wrap">
-        <!-- 你可以把 images/logo.png 换成自己的 logo -->
         <img src="./images/logo.png" alt="MSL Logo" class="logo-img">
       </div>
       <div>
@@ -554,25 +552,27 @@
       <div class="two-col">
         <div>
           <label for="orderDate">订餐日期（必填）</label>
-          <input type="date" id="orderDate"
-                 min="2025-12-05"
-                 max="2026-03-15">
-          <div class="hint">当前只开放 2025-12-05 至 2026-03-15 期间的周六取餐（后续可能开放周日）。</div>
+          <input type="date" id="orderDate">
+          <div class="hint">
+            目前开放档期：<span class="highlight">2025-12-05 ~ 2026-03-15</span>，
+            仅限<span class="highlight">周六</span>取餐（后续若加周日，会在群内通知）。
+          </div>
+        </div>
+        <div>
+          <label for="customerName">昵称（必填）</label>
+          <input type="text" id="customerName" placeholder="例如：小王 / 小红">
+          <div class="hint">现场取餐时可报这个昵称。</div>
         </div>
       </div>
       <div class="two-col" style="margin-top: 12px;">
         <div>
-          <label for="customerName">昵称（必填）</label>
-          <input type="text" id="customerName" placeholder="例如：小王 / 小红">
-        </div>
-        <div>
-          <label for="customerPhone">联系电话（可选，方便现场联系）</label>
+          <label for="customerPhone">联系电话（可选）</label>
           <input type="tel" id="customerPhone" placeholder="例如：647-000-0000">
         </div>
-      </div>
-      <div style="margin-top: 12px;">
-        <label for="wechatId">微信号（必填，方便与客服沟通）</label>
-        <input type="text" id="wechatId" placeholder="请输入常用微信号">
+        <div>
+          <label for="wechatId">微信号（必填，方便与客服沟通）</label>
+          <input type="text" id="wechatId" placeholder="请输入常用微信号">
+        </div>
       </div>
     </div>
 
@@ -583,7 +583,8 @@
       </div>
       <h2>菜品选择</h2>
       <div class="hint">
-        三格便当 / 金汤系列 / 炒饭套餐 / 小食可选择辣度；汤类默认无辣度。每点击一次「＋」即为一组配置，可重复添加不同辣度组合。
+        三格便当 / 金汤系列 / 麻辣香锅 / 炒饭套餐 / 小食可选择辣度；汤类默认无辣度。
+        每点击一次「＋」即为一组配置，可重复添加不同辣度与饮料组合。
       </div>
 
       <!-- 活动特惠 -->
@@ -610,7 +611,7 @@
       <!-- 麻辣香锅系列 -->
       <div class="menu-group-title">
         🍲 麻辣香锅系列（麻辣香锅 + 米饭）
-        <span class="menu-group-tag">Spicy Hotpot with Rice</span>
+        <span class="menu-group-tag">Mala Dry Pot + Rice</span>
       </div>
       <div class="menu-list" id="menuListMala"></div>
 
@@ -642,7 +643,9 @@
         <div class="step-circle">3</div> 查看 / 编辑购物车
       </div>
       <h2>已选菜品</h2>
-      <div class="hint">可随时移除或修改，如需不同辣度请分多次添加同一菜品。</div>
+      <div class="hint">
+        可随时移除或修改，如需不同辣度和饮料请分多次添加同一菜品。
+      </div>
       <div id="cartEmpty" class="cart-empty">
         当前购物车为空，请在上方菜品卡片中点击「＋」添加。
       </div>
@@ -666,32 +669,31 @@
         <div class="error" id="errorMsg" style="display:none;"></div>
 
         <div id="result" style="display:none;" class="result-box">
-  <div class="result-row">
-    ✅ 小客服微信号 hotopiasc 预订单已提交！<span class="badge">当天内完成 EMT</span>
-  </div>
+          <div class="result-row">
+            ✅ 小客服微信号 hotopiasc 预订单已提交！<span class="badge">当天内完成 EMT</span>
+          </div>
 
-  <div class="result-row">
-    取餐日期：<span class="highlight" id="orderDateShow"></span>
-    <span id="pickupTimeShowWrapper" style="display:none;">
-      ｜ 取餐时间：<span class="highlight" id="pickupTimeShow"></span>
-    </span>
-  </div>
+          <div class="result-row">
+            取餐日期：<span class="highlight" id="orderDateShow"></span>
+          </div>
 
           <div class="result-row">
             订单总金额：<span class="highlight" id="totalAmount"></span>
           </div>
-        
+
           <div class="result-row">
             请 EMT 至：<span class="highlight" id="emtEmail">test@gmail.com</span>
           </div>
-        
           <div class="result-row small">
-            📸 请截图保存本页作为下单凭证。
+            ⚠️ 本页面不显示订单号，订单号由后台系统统一排号。
+          </div>
+          <div class="result-row small">
+            📸 请<span class="highlight">截图保存本页</span>作为下单凭证。
           </div>
           <div class="result-row small">
             💰 完成 EMT 付款后，请添加小客服微信 <span class="highlight">hotopiasc</span>，
-            发送「付款截图 + 本页截图」，小客服会回复您的<span class="highlight">取餐订单号</span>，
-            现场取餐报号即可。
+            发送「<span class="highlight">付款截图 + 本页截图</span>」，小客服会回复您的
+            <span class="highlight">取餐订单号</span>，现场取餐报号即可。
           </div>
           <div class="result-row small">
             👉 EMT 备注建议填写：<span class="highlight">昵称 + 取餐日期</span>
@@ -701,7 +703,7 @@
             ⚠️ 订单仅在本店收到 EMT 付款并通过微信 / 电话与您确认后才视为有效。
             当天内未付款，预订单将自动作废。
           </div>
-        
+
           <div class="items-summary">
             <div>本单菜品：</div>
             <ul id="itemsSummary"></ul>
@@ -712,7 +714,7 @@
   </div>
 </div>
 
-<!-- 加菜弹窗 -->
+<!-- 加菜弹窗（辣度 + 饮料 + 数量） -->
 <div id="modalOverlay" class="modal-overlay">
   <div class="modal">
     <div class="modal-title" id="modalDishName">添加菜品</div>
@@ -741,10 +743,10 @@
 
 <script>
   // =======================
-  // 订餐日期与取餐时间配置
+  // 订餐日期与时间配置
   // =======================
 
-  // 允许订餐的日期区间（含首尾），格式必须是 'YYYY-MM-DD'
+  // 允许订餐的日期区间（含首尾）
   const ORDER_START_DATE = '2025-12-05';
   const ORDER_END_DATE   = '2026-03-15';
 
@@ -753,7 +755,7 @@
   const ALLOWED_WEEKDAYS = [6];
 
   // 给后端用的 pickupTime 字段（前端不展示）
-  // 如果以后想固定时间，例如 18:00，可以改成：'18:00'
+  // 以后你想固定某个时间可以直接改这里，比如 '18:00'
   const PICKUP_TIME_DEFAULT = '';
 
   // 饮料选项
@@ -808,6 +810,46 @@
       imageUrl: './images/鱼香茄子.png'
     },
     {
+      id: 4,
+      category: 'bento',
+      name: '川椒鸡翅 + 西红柿鸡蛋',
+      price: 18.99,
+      spicy: true,
+      kcal: 850,
+      desc: 'Chicken Wings, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+      imageUrl: './images/川椒鸡翅.png'
+    },
+    {
+      id: 5,
+      category: 'bento',
+      name: '尖椒肥肠 + 西红柿鸡蛋',
+      price: 16.99,
+      spicy: true,
+      kcal: 820,
+      desc: 'Pork Intestine, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+      imageUrl: './images/尖椒肥肠.png'
+    },
+    {
+      id: 6,
+      category: 'bento',
+      name: '酸豆角炒肉沫 + 西红柿鸡蛋',
+      price: 17.99,
+      spicy: true,
+      kcal: 738,
+      desc: 'Minced Pork, Pickled Green Beans, Tomatoes & Eggs, Rice, etc.',
+      imageUrl: './images/酸豆角肉沫.png'
+    },
+    {
+      id: 7,
+      category: 'bento',
+      name: '照烧肥牛 + 西红柿鸡蛋',
+      price: 17.99,
+      spicy: false,
+      kcal: 845,
+      desc: 'Teriyaki Beef, Tomatoes & Eggs, Rice, etc.',
+      imageUrl: './images/照烧牛肉.png'
+    },
+    {
       id: 10,
       category: 'bento',
       name: '糖醋鱼柳 + 西红柿鸡蛋',
@@ -824,18 +866,8 @@
       price: 15.99,
       spicy: true,
       kcal: 719,
-      desc: 'Minced Pork, Tofu, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
+      desc: 'Minced Pork, Tofu, Chili Peppers, Tomatoes & Eggs, Rice, etc.',
       imageUrl: './images/麻婆豆腐.png'
-    },
-    {
-      id: 7,
-      category: 'bento',
-      name: '照烧肥牛 + 西红柿鸡蛋',
-      price: 17.99,
-      spicy: false,
-      kcal: 845,
-      desc: 'Teriyaki Beef + Tomatoes & Eggs, Rice, etc.',
-      imageUrl: './images/照烧牛肉.png'
     },
 
     // 🍲 金汤系列
@@ -906,16 +938,6 @@
 
     // 🥗 小食 / 加购
     {
-      id: 6,
-      category: 'bento',
-      name: '酸豆角炒肉沫 + 西红柿鸡蛋',
-      price: 17.99,
-      spicy: true,
-      kcal: 738,
-      desc: 'Minced Pork, Pickled Green Beans, Tomatoes & Eggs, Rice, etc.',
-      imageUrl: './images/酸豆角肉沫新.png'
-    },
-    {
       id: 16,
       category: 'side',
       name: '凉拌土豆丝 + POP',
@@ -940,9 +962,9 @@
     }
   ];
 
-  // Apps Script Web App URL（最新）
+  // Apps Script Web App URL
   const SHEET_API_URL =
-  "https://script.google.com/macros/s/AKfycbz6W6bAbJL6bDBFzYBi3gswJUQ6qon29bZo4bUnOeKZ0xw9aoCZARz4gxlRJBDzVspW/exec";
+    "https://script.google.com/macros/s/AKfycbz6W6bAbJL6bDBFzYBi3gswJUQ6qon29bZo4bUnOeKZ0xw9aoCZARz4gxlRJBDzVspW/exec";
 
   // 你自己的 EMT 邮箱
   const EMT_EMAIL = "test@gmail.com";
@@ -966,8 +988,6 @@
   const submitBtn = document.getElementById('submitBtn');
   const errorMsg = document.getElementById('errorMsg');
   const resultBox = document.getElementById('result');
-  const orderNoEl = document.getElementById('orderNo');
-  const orderNoForEmtEl = document.getElementById('orderNoForEmt');
   const totalAmountEl = document.getElementById('totalAmount');
   const itemsSummaryEl = document.getElementById('itemsSummary');
   const orderDateShowEl = document.getElementById('orderDateShow');
@@ -988,24 +1008,48 @@
 
   let currentDishId = null;
 
-  // 把 'YYYY-MM-DD' 转成本地时间的 Date，避免时区把日期弄错
+  // =========================
+  // 日期工具函数
+  // =========================
   function createDateFromStr(str) {
     const [y, m, d] = str.split('-').map(n => parseInt(n, 10));
     return new Date(y, m - 1, d);
   }
 
-  function initDrinkOptions() {
-    modalDrinkSelect.innerHTML = '';
-    DRINK_OPTIONS.forEach(d => {
-      const opt = document.createElement('option');
-      opt.value = d;
-      opt.textContent = d;
-      modalDrinkSelect.appendChild(opt);
-    });
-  }
+  // 默认日期设为「从今天开始，往后找第一个允许的周几」
+  (function setDefaultDate() {
+    const dateInput = document.getElementById('orderDate');
+    const start = createDateFromStr(ORDER_START_DATE);
+    const end = createDateFromStr(ORDER_END_DATE);
+    const now = new Date();
 
-  initDrinkOptions();
+    let d = now < start ? new Date(start.getTime()) : new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
+    while (d <= end) {
+      const weekday = d.getDay();
+      if (ALLOWED_WEEKDAYS.includes(weekday)) {
+        break;
+      }
+      d.setDate(d.getDate() + 1);
+    }
+
+    if (d > end) {
+      d = start;
+    }
+
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    const val = `${yyyy}-${mm}-${dd}`;
+
+    dateInput.value = val;
+    dateInput.min = ORDER_START_DATE;
+    dateInput.max = ORDER_END_DATE;
+  })();
+
+  // =========================
+  // 菜单渲染
+  // =========================
   function renderMenuForCategory(category, containerEl) {
     containerEl.innerHTML = '';
     menuItems
@@ -1064,38 +1108,9 @@
 
   renderAllMenus();
 
-  // 默认日期设为本季内最近一个允许的取餐日
-  (function setDefaultDate() {
-    const dateInput = document.getElementById('orderDate');
-
-    const start = createDateFromStr(ORDER_START_DATE);
-    const end   = createDateFromStr(ORDER_END_DATE);
-    const today = new Date();
-
-    // 取今天和季节开始日期中较晚的那一天
-    let d = today > start ? today : start;
-
-    // 如果已经超过季节结束，就兜底为季节开始日
-    if (d > end) {
-      d = new Date(start.getTime());
-    }
-
-    // 往后滚动到最近的允许星期几（目前只有周六）
-    while (!ALLOWED_WEEKDAYS.includes(d.getDay()) && d <= end) {
-      d.setDate(d.getDate() + 1);
-    }
-
-    // 格式化为 YYYY-MM-DD
-    const yyyy = d.getFullYear();
-    const mm = String(d.getMonth() + 1).padStart(2, '0');
-    const dd = String(d.getDate()).padStart(2, '0');
-    const val = `${yyyy}-${mm}-${dd}`;
-
-    dateInput.value = val;
-    dateInput.min = ORDER_START_DATE;
-    dateInput.max = ORDER_END_DATE;
-  })();
-
+  // =========================
+  // 弹窗控制
+  // =========================
   function openModal(dishId) {
     const dish = menuItems.find(m => m.id === dishId);
     if (!dish) return;
@@ -1110,16 +1125,22 @@
       modalSpicySelect.value = '正常辣';
     } else {
       modalSpicyRow.style.display = 'none';
-      modalSpicySelect.value = '无辣度';
+      modalSpicySelect.value = '';
     }
 
     // 饮料行
     if (dish.requiresDrink) {
       modalDrinkRow.style.display = 'flex';
-      modalDrinkSelect.value = DRINK_OPTIONS[0];
+      modalDrinkSelect.innerHTML = '';
+      DRINK_OPTIONS.forEach(dr => {
+        const opt = document.createElement('option');
+        opt.value = dr;
+        opt.textContent = dr;
+        modalDrinkSelect.appendChild(opt);
+      });
     } else {
       modalDrinkRow.style.display = 'none';
-      modalDrinkSelect.value = '';
+      modalDrinkSelect.innerHTML = '';
     }
 
     // 免费赠饮：数量锁死为 1
@@ -1136,6 +1157,76 @@
     currentDishId = null;
   }
 
+  modalCancelBtn.addEventListener('click', closeModal);
+
+  modalOverlay.addEventListener('click', function (e) {
+    if (e.target === modalOverlay) {
+      closeModal();
+    }
+  });
+
+  modalConfirmBtn.addEventListener('click', function () {
+    if (currentDishId == null) return;
+    const dish = menuItems.find(m => m.id === currentDishId);
+    if (!dish) return;
+
+    let qty = parseInt(modalQtyInput.value || '1', 10);
+    if (isNaN(qty) || qty <= 0) {
+      alert('数量至少为 1');
+      return;
+    }
+
+    // 免费赠饮始终为 1
+    if (dish.category === 'promo') {
+      qty = 1;
+    }
+
+    let spicyLevel = '';
+    if (dish.spicy) {
+      spicyLevel = modalSpicySelect.value || '正常辣';
+    }
+
+    let drink = '';
+    if (dish.requiresDrink) {
+      drink = modalDrinkSelect.value || DRINK_OPTIONS[0];
+    }
+
+    // 检查购物车里是否已经有免费赠饮
+    if (dish.category === 'promo') {
+      const hasPromo = cart.some(item => item.category === 'promo');
+      if (hasPromo) {
+        alert('每单仅限领取 1 杯免费赠饮。');
+        return;
+      }
+    }
+
+    const existingIndex = cart.findIndex(
+      item => item.id === dish.id &&
+              item.spicyLevel === spicyLevel &&
+              item.drink === drink
+    );
+
+    if (existingIndex >= 0 && dish.category !== 'promo') {
+      cart[existingIndex].quantity += qty;
+    } else {
+      cart.push({
+        id: dish.id,
+        name: dish.name,
+        price: dish.price,
+        spicyLevel,
+        quantity: qty,
+        drink,
+        category: dish.category
+      });
+    }
+
+    renderCart();
+    closeModal();
+  });
+
+  // =========================
+  // 购物车渲染
+  // =========================
   function renderCart() {
     if (cart.length === 0) {
       cartEmptyEl.style.display = 'block';
@@ -1192,81 +1283,14 @@
     }
   });
 
-  modalCancelBtn.addEventListener('click', function () {
-    closeModal();
-  });
-
-  modalOverlay.addEventListener('click', function (e) {
-    if (e.target === modalOverlay) {
-      closeModal();
-    }
-  });
-
-  modalConfirmBtn.addEventListener('click', function () {
-    if (currentDishId == null) return;
-    const dish = menuItems.find(m => m.id === currentDishId);
-    if (!dish) return;
-
-    // 免费赠饮：检查是否已存在
-    if (dish.category === 'promo') {
-      const alreadyPromo = cart.some(item => item.id === dish.id);
-      if (alreadyPromo) {
-        alert('每单限领 1 份免费赠饮料～');
-        return;
-      }
-    }
-
-    let qty = parseInt(modalQtyInput.value || '1', 10);
-    if (isNaN(qty) || qty <= 0) {
-      alert('数量至少为 1');
-      return;
-    }
-    if (dish.category === 'promo') {
-      qty = 1; // 保险起见再锁一次
-    }
-
-    let spicyLevel = '';
-    if (dish.spicy) {
-      spicyLevel = modalSpicySelect.value || '正常辣';
-    }
-
-    let drink = '';
-    if (dish.requiresDrink) {
-      drink = modalDrinkSelect.value;
-      if (!drink) {
-        alert('请选择饮料');
-        return;
-      }
-    }
-
-    const existingIndex = cart.findIndex(
-      item => item.id === dish.id &&
-              item.spicyLevel === spicyLevel &&
-              item.drink === drink
-    );
-    if (existingIndex >= 0 && dish.category !== 'promo') {
-      cart[existingIndex].quantity += qty;
-    } else {
-      cart.push({
-        id: dish.id,
-        name: dish.name,
-        price: dish.price,
-        spicyLevel,
-        quantity: qty,
-        drink,
-        category: dish.category
-      });
-    }
-
-    renderCart();
-    closeModal();
-  });
-
   function showError(msg) {
     errorMsg.textContent = msg;
     errorMsg.style.display = 'block';
   }
 
+  // =========================
+  // 提交订单
+  // =========================
   submitBtn.addEventListener('click', function () {
     errorMsg.style.display = 'none';
     resultBox.style.display = 'none';
@@ -1286,12 +1310,15 @@
       return showError('请选择取餐日期');
     }
 
-    // 1）日期区间
-    if (orderDate < ORDER_START_DATE || orderDate > ORDER_END_DATE) {
-      return showError(`当前可选日期为 ${ORDER_START_DATE} 至 ${ORDER_END_DATE} 期间的周六`);
+    const todayStr = new Date().toISOString().slice(0, 10);
+    if (orderDate < todayStr) {
+      return showError('取餐日期不能早于今天');
     }
 
-    // 2）星期几校验
+    if (orderDate < ORDER_START_DATE || orderDate > ORDER_END_DATE) {
+      return showError('取餐日期超出当前开放档期，请重新选择。');
+    }
+
     const d = createDateFromStr(orderDate);
     const weekday = d.getDay(); // 0=周日...6=周六
     if (!ALLOWED_WEEKDAYS.includes(weekday)) {
@@ -1310,7 +1337,7 @@
       return showError('购物车为空，请先添加至少一份菜品');
     }
 
-    // 如果有免费赠饮料，必须有至少一份除「凉拌土豆丝+POP」以外的菜品
+    // 如果有免费赠饮料，必须有至少一份除「凉拌土豆丝+POP」以外的正价菜品
     const hasPromoDrink = cart.some(item => item.category === 'promo');
     if (hasPromoDrink) {
       const hasRealFood = cart.some(
@@ -1327,20 +1354,10 @@
       totalAmount += item.price * item.quantity;
     });
 
-    // 生成订单号：YYYYMMDD-XX
-    //const dateStr = orderDate.replace(/-/g, '');
-    //const key = 'orderCount_' + dateStr;
-    //const prevCount = parseInt(localStorage.getItem(key) || '0', 10);
-    //const nextSeq = prevCount + 1;
-    //const seqStr = String(nextSeq).padStart(2, '0');
-    //const orderNo = `${dateStr}-${seqStr}`;
-
     // 给后端的取餐时间（前端不展示）
     const pickupTime = PICKUP_TIME_DEFAULT;
 
-    // 本地 UI 展示
-    //orderNoEl.textContent = orderNo;
-    //orderNoForEmtEl.textContent = orderNo;
+    // 本地 UI 展示（不展示订单号）
     totalAmountEl.textContent = 'CAD $' + totalAmount.toFixed(2);
     orderDateShowEl.textContent = orderDate;
 
@@ -1348,10 +1365,7 @@
     itemsSummaryEl.innerHTML = '';
     const linesForBackend = [];
     cart.forEach(item => {
-      const dishInfo = menuItems.find(m => m.id === item.id);
-      const spicyText = dishInfo && dishInfo.spicy && item.spicyLevel
-        ? `（${item.spicyLevel}）`
-        : '';
+      const spicyText = item.spicyLevel ? `（${item.spicyLevel}）` : '';
       const drinkText = item.drink ? `（饮料：${item.drink}）` : '';
       const lineText = `${item.name}${spicyText}${drinkText} × ${item.quantity} = CAD $${(item.price * item.quantity).toFixed(2)}`;
 
@@ -1369,17 +1383,13 @@
 
     resultBox.style.display = 'block';
 
-    // 防止重复提交
+    // 防止重复提交（当前页面）
     hasSubmitted = true;
     submitBtn.disabled = true;
     submitBtn.textContent = '已提交（正在发送到后台）';
 
-    // 把流水号存在 localStorage，下次同一天会接着往后排
-    localStorage.setItem(key, nextSeq.toString());
-
-    // 发给 Apps Script 的数据格式
+    // 发给 Apps Script 的数据格式（不再传前端生成的 orderNo）
     const payload = {
-      orderNo: orderNo,
       orderDate: orderDate,
       pickupTime: pickupTime || '',
       nickName: nickName,
@@ -1393,7 +1403,7 @@
     // 发送到 Google Apps Script（no-cors，避免 CORS 问题）
     fetch(SHEET_API_URL, {
       method: 'POST',
-      mode: 'no-cors', // 关键：不做 CORS 校验
+      mode: 'no-cors',
       cache: 'no-cache',
       headers: {
         'Content-Type': 'text/plain;charset=utf-8'
@@ -1415,9 +1425,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-
-
