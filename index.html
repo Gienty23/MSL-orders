@@ -535,7 +535,7 @@
         <img src="./images/logo.png" alt="MSL Logo" class="logo-img">
       </div>
       <div>
-        <h1>MSL 预订单</h1>
+        <h1>MSL龙门阵 预订单</h1>
         <div class="sub-title">提前预订 · 现场取餐 · EMT 支付</div>
         <div class="chips">
           <span class="chip">三格便当 · 金汤汤锅</span>
@@ -553,9 +553,9 @@
       <h2>取餐信息</h2>
       <div class="two-col">
         <div>
-          <label for="orderDate">取餐日期（必填）</label>
+          <label for="orderDate">订餐日期（必填）</label>
           <input type="date" id="orderDate">
-          <div class="hint">请选择计划取餐的日期。</div>
+          <div class="hint">请选择计划订餐的日期。</div>
         </div>
         <div>
           <label for="pickupTime">取餐时间（可选）</label>
@@ -643,7 +643,7 @@
       </div>
       <h2>备注特殊要求</h2>
       <label for="remark">备注</label>
-      <textarea id="remark" placeholder="例如：米饭少一点 / 不要花生 / 分开放辣椒 / 各份写上昵称等"></textarea>
+      <textarea id="remark" placeholder="例如：米饭少一点 / 不要花生 / 不要花椒 / 各份写上昵称等"></textarea>
 
       <div style="margin-top:14px;">
         <button class="btn" id="submitBtn">提交订单</button>
@@ -651,7 +651,7 @@
 
         <div id="result" style="display:none;" class="result-box">
           <div class="result-row">
-            ✅ 预订单已提交！<span class="badge">请在 30 分钟内完成 EMT</span>
+            ✅ 小客服微信号 hotopiasc 预订单已提交！<span class="badge">当天内完成 EMT</span>
           </div>
           <div class="result-row">
             订单号：<span class="highlight" id="orderNo"></span>
@@ -670,7 +670,7 @@
             👉 EMT 备注请填写订单号：<span class="highlight" id="orderNoForEmt"></span>
           </div>
           <div class="result-row small">
-            ⚠️ 订单仅在本店收到 EMT 付款并通过微信 / 电话与您确认后才视为有效。如 30 分钟内未付款，预订单将自动作废。
+            ⚠️ 订单仅在本店收到 EMT 付款并通过微信 / 电话与您确认后才视为有效。当天内未付款，预订单将自动作废。
           </div>
           <div class="items-summary">
             <div>本单菜品：</div>
@@ -782,22 +782,22 @@
     {
       id: 8,
       category: 'bento',
-      name: '肉食主义 + 西红柿鸡蛋',
+      name: '肉食主义 + 米饭',
       price: 18.99,
       spicy: true,
       kcal: 910,
-      desc: 'Meat Balls, Pork Intestine, Spam, Beef Tripe, Tomatoes & Eggs, Rice, etc.',
-      imageUrl: './images/麻婆豆腐.png'
+      desc: 'Meat Balls, Pork Intestine, Spam, Beef Tripe, Rice, etc.',
+      imageUrl: './images/肉食主义.png'
     },
     {
       id: 9,
       category: 'bento',
-      name: '香辣四喜 + 西红柿鸡蛋',
+      name: '香辣四喜 + 米饭',
       price: 18.99,
       spicy: true,
       kcal: 810,
-      desc: 'Shrimp, Pork Rib, Beef Sirloin, Lamb Cube, Tomatoes & Eggs, Rice, etc.',
-      imageUrl: './images/乌筍小炒肉.png'
+      desc: 'Shrimp, Pork Rib, Beef Sirloin, Lamb Cube, Rice, etc.',
+      imageUrl: './images/香辣四喜.png'
     },
     {
       id: 10,
@@ -807,7 +807,7 @@
       spicy: false,
       kcal: 750,
       desc: 'Fried Fish Fillet, Sweet & Sour Sauce, Tomatoes & Eggs, Rice, etc.',
-      imageUrl: './images/鱼香茄子.png'
+      imageUrl: './images/糖醋鱼柳.png'
     },
     {
       id: 11,
@@ -861,7 +861,7 @@
       spicy: false,
       kcal: 754,
       desc: 'Classic Fried Rice + Winter Melon Shrimp Soup',
-      imageUrl: './images/乌筍小炒肉.png'
+      imageUrl: './images/那一年蛋炒饭.png'
     },
 
     // 🥗 小食 / 加购
@@ -873,7 +873,7 @@
       spicy: true,
       kcal: 430,
       desc: 'Shredded Potatoes, Chili Peppers, Green Onions, etc.',
-      imageUrl: './images/麻婆豆腐.png'
+      imageUrl: './images/套餐.png'
     },
 
     // 🍲 汤类
@@ -885,7 +885,7 @@
       spicy: false,
       kcal: 94,
       desc: 'Winter Melon & Shrimp Soup',
-      imageUrl: './images/麻婆豆腐.png'
+      imageUrl: './images/冬瓜虾仁汤.png'
     }
   ];
 
@@ -1260,6 +1260,7 @@
 </script>
 </body>
 </html>
+
 
 
 
