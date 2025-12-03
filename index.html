@@ -554,13 +554,10 @@
       <div class="two-col">
         <div>
           <label for="orderDate">订餐日期（必填）</label>
-          <input type="date" id="orderDate">
-          <div class="hint">请选择计划订餐的日期。</div>
-        </div>
-        <div>
-          <label for="pickupTime">取餐时间（可选）</label>
-          <input type="time" id="pickupTime">
-          <div class="hint">例如 18:30，如有变动以客服通知为准。</div>
+          <input type="date" id="orderDate"
+                 min="2025-12-05"
+                 max="2026-03-15">
+          <div class="hint">当前只开放 2025-12-05 至 2026-03-15 期间的周六取餐（后续可能开放周日）。</div>
         </div>
       </div>
       <div class="two-col" style="margin-top: 12px;">
@@ -658,7 +655,6 @@
           </div>
           <div class="result-row">
             取餐日期：<span class="highlight" id="orderDateShow"></span>
-            <span id="pickupTimeShowWrapper" style="display:none;"> ｜ 取餐时间：<span class="highlight" id="pickupTimeShow"></span></span>
           </div>
           <div class="result-row">
             订单总金额：<span class="highlight" id="totalAmount"></span>
@@ -706,7 +702,25 @@
 </div>
 
 <script>
-  // 菜单数据（你可以根据需要调整图片路径和价格）
+  // =======================
+  // 订餐日期与取餐时间配置
+  // =======================
+
+  // 允许订餐的日期区间（含首尾），格式必须是 'YYYY-MM-DD'
+  const ORDER_START_DATE = '2025-12-05';
+  const ORDER_END_DATE   = '2026-03-15';
+
+  // 允许的取餐星期几：0=周日,1=周一,...,6=周六
+  // 目前仅开放周六，将来要加周日，改成 [6, 0] 即可
+  const ALLOWED_WEEKDAYS = [6];
+
+  // 给后端用的 pickupTime 字段（前端不展示）
+  // 如果以后想固定时间，例如 18:00，可以改成：'18:00'
+  const PICKUP_TIME_DEFAULT = '';
+
+  // =========================
+  // 菜单数据（你可以调整）
+  // =========================
   const menuItems = [
     // 🍱 三格便当类
     {
@@ -767,7 +781,7 @@
       spicy: true,
       kcal: 738,
       desc: 'Minced Pork, Pickled Green Beans, Tomatoes & Eggs, Rice, etc.',
-      imageUrl: './images/酸豆角肉沫.png'  // 
+      imageUrl: './images/酸豆角肉沫.png'
     },
     {
       id: 7,
@@ -918,8 +932,6 @@
   const totalAmountEl = document.getElementById('totalAmount');
   const itemsSummaryEl = document.getElementById('itemsSummary');
   const orderDateShowEl = document.getElementById('orderDateShow');
-  const pickupTimeShowWrapper = document.getElementById('pickupTimeShowWrapper');
-  const pickupTimeShowEl = document.getElementById('pickupTimeShow');
   const emtEmailEl = document.getElementById('emtEmail');
 
   emtEmailEl.textContent = EMT_EMAIL;
@@ -934,6 +946,12 @@
   const modalConfirmBtn = document.getElementById('modalConfirm');
 
   let currentDishId = null;
+
+  // 把 'YYYY-MM-DD' 转成本地时间的 Date，避免时区把日期弄错
+  function createDateFromStr(str) {
+    const [y, m, d] = str.split('-').map(n => parseInt(n, 10));
+    return new Date(y, m - 1, d);
+  }
 
   function renderMenuForCategory(category, containerEl) {
     containerEl.innerHTML = '';
@@ -988,15 +1006,36 @@
 
   renderAllMenus();
 
-  // 默认日期设为明天
+  // 默认日期设为本季内最近一个允许的取餐日
   (function setDefaultDate() {
     const dateInput = document.getElementById('orderDate');
-    const d = new Date();
-    d.setDate(d.getDate() + 1);
+
+    const start = createDateFromStr(ORDER_START_DATE);
+    const end   = createDateFromStr(ORDER_END_DATE);
+    const today = new Date();
+
+    // 取今天和季节开始日期中较晚的那一天
+    let d = today > start ? today : start;
+
+    // 如果已经超过季节结束，就兜底为季节开始日
+    if (d > end) {
+      d = new Date(start.getTime());
+    }
+
+    // 往后滚动到最近的允许星期几（目前只有周六）
+    while (!ALLOWED_WEEKDAYS.includes(d.getDay()) && d <= end) {
+      d.setDate(d.getDate() + 1);
+    }
+
+    // 格式化为 YYYY-MM-DD
     const yyyy = d.getFullYear();
     const mm = String(d.getMonth() + 1).padStart(2, '0');
     const dd = String(d.getDate()).padStart(2, '0');
-    dateInput.value = `${yyyy}-${mm}-${dd}`;
+    const val = `${yyyy}-${mm}-${dd}`;
+
+    dateInput.value = val;
+    dateInput.min = ORDER_START_DATE;
+    dateInput.max = ORDER_END_DATE;
   })();
 
   function openModal(dishId) {
@@ -1137,7 +1176,6 @@
     }
 
     const orderDate = document.getElementById('orderDate').value;
-    const pickupTime = document.getElementById('pickupTime').value;
     const nickName = document.getElementById('customerName').value.trim();
     const phone = document.getElementById('customerPhone').value.trim();
     const wechatId = document.getElementById('wechatId').value.trim();
@@ -1147,9 +1185,16 @@
       return showError('请选择取餐日期');
     }
 
-    const todayStr = new Date().toISOString().slice(0, 10);
-    if (orderDate < todayStr) {
-      return showError('取餐日期不能早于今天');
+    // 1）检查是否在允许的日期区间内
+    if (orderDate < ORDER_START_DATE || orderDate > ORDER_END_DATE) {
+      return showError(`当前可选日期为 ${ORDER_START_DATE} 至 ${ORDER_END_DATE} 期间的周六`);
+    }
+
+    // 2）检查是否为允许的星期几（目前是周六）
+    const d = createDateFromStr(orderDate);
+    const weekday = d.getDay(); // 0=周日...6=周六
+    if (!ALLOWED_WEEKDAYS.includes(weekday)) {
+      return showError('目前仅开放周六取餐，请选择周六日期');
     }
 
     if (!nickName) {
@@ -1178,17 +1223,14 @@
     const seqStr = String(nextSeq).padStart(2, '0');
     const orderNo = `${dateStr}-${seqStr}`;
 
+    // 给后端的取餐时间（前端不展示）
+    const pickupTime = PICKUP_TIME_DEFAULT;
+
     // 本地 UI 展示
     orderNoEl.textContent = orderNo;
     orderNoForEmtEl.textContent = orderNo;
     totalAmountEl.textContent = 'CAD $' + totalAmount.toFixed(2);
     orderDateShowEl.textContent = orderDate;
-    if (pickupTime) {
-      pickupTimeShowWrapper.style.display = 'inline';
-      pickupTimeShowEl.textContent = pickupTime;
-    } else {
-      pickupTimeShowWrapper.style.display = 'none';
-    }
 
     // 菜品列表展示
     itemsSummaryEl.innerHTML = '';
@@ -1247,7 +1289,7 @@
     })
       .then(() => {
         console.log('Order sent to backend (no-cors).');
-        // 不用再处理响应，UI 已经展示成功信息
+        // UI 已经展示成功信息
       })
       .catch(err => {
         console.error('Submission Error:', err);
@@ -1260,14 +1302,6 @@
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
 
 
 
