@@ -45,21 +45,21 @@
     }
 
     .logo-wrap {
-  width: 64px;
-  height: 64px;
-  border-radius: 20px;
-  overflow: hidden;
-  flex-shrink: 0;
-  box-shadow: 0 10px 30px rgba(248,113,113,0.5);
-}
+      width: 64px;
+      height: 64px;
+      border-radius: 20px;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 10px 30px rgba(248,113,113,0.5);
+    }
 
-/* 新增：LOGO 图片自适应容器 */
-.logo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;   /* 保持比例裁剪，多余部分裁掉 */
-  display: block;
-}
+    .logo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    
     h1 {
       margin: 0 0 4px;
       font-size: 24px;
@@ -205,7 +205,6 @@
       box-shadow: 0 6px 15px rgba(0,0,0,0.45);
     }
 
-    /* 方形菜品图片区域 */
     .menu-img {
       width: 100%;
       aspect-ratio: 1 / 1;
@@ -370,7 +369,6 @@
       padding-left: 20px;
     }
 
-    /* 购物车样式 */
     .cart-empty {
       font-size: 13px;
       color: var(--text-sub);
@@ -418,7 +416,6 @@
       background: rgba(127,29,29,0.9);
     }
 
-    /* 弹窗 */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -497,7 +494,6 @@
 <body>
   <div class="page-wrap">
     <div class="container">
-      <!-- 顶部 LOGO + 文案 -->
       <div class="header">
        <div class="logo-wrap">
           <img src="./images/logo.png" alt="MSL Logo" class="logo-img">
@@ -515,7 +511,6 @@
         </div>
       </div>
 
-      <!-- 1. 取餐信息 -->
       <div class="section">
         <div class="step-tag">
           <div class="step-circle">1</div> 填写取餐信息
@@ -549,7 +544,6 @@
         </div>
       </div>
 
-      <!-- 2. 菜单选择 -->
       <div class="section">
         <div class="step-tag">
           <div class="step-circle">2</div> 选择菜品（点击「＋」添加到购物车）
@@ -590,7 +584,6 @@
         <div class="menu-list" id="menuListSoup"></div>
       </div>
 
-      <!-- 3. 购物车 -->
       <div class="section">
         <div class="step-tag">
           <div class="step-circle">3</div> 查看 / 编辑购物车
@@ -606,7 +599,6 @@
         </div>
       </div>
 
-      <!-- 4. 备注 + 提交 -->
       <div class="section">
         <div class="step-tag">
           <div class="step-circle">4</div> 填写备注并提交
@@ -634,7 +626,7 @@
               订单总金额：<span class="highlight" id="totalAmount"></span>
             </div>
             <div class="result-row">
-              请 EMT 至：<span class="highlight" id="emtEmail">your-emt-email@example.com</span>
+              请 EMT 至：<span class="highlight" id="emtEmail"></span>
             </div>
             <div class="result-row small">
               👉 EMT 备注请填写订单号：<span class="highlight" id="orderNoForEmt"></span>
@@ -652,7 +644,6 @@
     </div>
   </div>
 
-  <!-- 加菜弹窗 -->
   <div id="modalOverlay" class="modal-overlay">
     <div class="modal">
       <div class="modal-title" id="modalDishName">添加菜品</div>
@@ -676,193 +667,41 @@
   </div>
 
   <script>
-    // 菜单数据（照烧肥牛已替换）
+    // 菜单数据
     const menuItems = [
       // 🍱 三格便当类
-      {
-        id: 1,
-        category: 'bento',
-        name: '农家小炒肉 + 西红柿鸡蛋',
-        price: 16.99,
-        spicy: true,
-        kcal: 833,
-        desc: 'Pork, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: './images/农家小炒肉.png'
-      },
-      {
-        id: 2,
-        category: 'bento',
-        name: '宫保鸡丁 + 西红柿鸡蛋',
-        price: 16.99,
-        spicy: true,
-        kcal: 815,
-        desc: 'Chicken, Peanuts, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: './images/宫保鸡丁.png'
-      },
-      {
-        id: 3,
-        category: 'bento',
-        name: '鱼香茄子 + 西红柿鸡蛋',
-        price: 15.99,
-        spicy: true,
-        kcal: 720,
-        desc: 'Eggplant, Wood Ear Mushroom, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: './images/鱼香茄子.png'
-      },
-      {
-        id: 4,
-        category: 'bento',
-        name: '川椒鸡翅 + 西红柿鸡蛋',
-        price: 18.99,
-        spicy: true,
-        kcal: 850,
-        desc: 'Chicken Wings, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: './images/川椒鸡翅.png'
-      },
-      {
-        id: 5,
-        category: 'bento',
-        name: '尖椒肥肠 + 西红柿鸡蛋',
-        price: 16.99,
-        spicy: true,
-        kcal: 820,
-        desc: 'Pork Intestine, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: './images/尖椒肥肠.png'
-      },
-      {
-        id: 6,
-        category: 'bento',
-        name: '酸豆角炒肉末 + 西红柿鸡蛋',
-        price: 17.99,
-        spicy: true,
-        kcal: 738,
-        desc: 'Minced Pork, Pickled Green Beans, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: './images/酸豆角肉沫.png'
-      },
-      {
-        id: 7,
-        category: 'bento',
-        name: '照烧肥牛 + 西红柿鸡蛋',
-        price: 17.99,
-        spicy: false,
-        kcal: 845,
-        desc: 'Teriyaki Beef + Tomatoes & Eggs, Rice, etc.',
-        imageUrl: './images/金汤酸菜肥牛.png'
-      },
-      {
-        id: 8,
-        category: 'bento',
-        name: '肉食主义 + 西红柿鸡蛋',
-        price: 18.99,
-        spicy: true,
-        kcal: 910,
-        desc: 'Meat Balls, Pork Intestine, Spam, Beef Tripe, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: './images/麻婆豆腐.png'
-      },
-      {
-        id: 9,
-        category: 'bento',
-        name: '香辣四喜 + 西红柿鸡蛋',
-        price: 18.99,
-        spicy: true,
-        kcal: 810,
-        desc: 'Shrimp, Pork Rib, Beef Sirloin, Lamb Cube, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: './images/乌筍小炒肉.png'
-      },
-      {
-        id: 10,
-        category: 'bento',
-        name: '糖醋鱼柳 + 西红柿鸡蛋',
-        price: 16.99,
-        spicy: false,
-        kcal: 750,
-        desc: 'Fried Fish Fillet, Sweet & Sour Sauce, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: './images/鱼香茄子.png'
-      },
-      {
-        id: 11,
-        category: 'bento',
-        name: '麻婆豆腐 + 西红柿鸡蛋',
-        price: 15.99,
-        spicy: true,
-        kcal: 719,
-        desc: 'Minced Pork, Tofu, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.',
-        imageUrl: './images/麻婆豆腐.png'
-      },
+      { id: 1, category: 'bento', name: '农家小炒肉 + 西红柿鸡蛋', price: 16.99, spicy: true, kcal: 833, desc: 'Pork, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.', imageUrl: './images/农家小炒肉.png' },
+      { id: 2, category: 'bento', name: '宫保鸡丁 + 西红柿鸡蛋', price: 16.99, spicy: true, kcal: 815, desc: 'Chicken, Peanuts, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.', imageUrl: './images/宫保鸡丁.png' },
+      { id: 3, category: 'bento', name: '鱼香茄子 + 西红柿鸡蛋', price: 15.99, spicy: true, kcal: 720, desc: 'Eggplant, Wood Ear Mushroom, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.', imageUrl: './images/鱼香茄子.png' },
+      { id: 4, category: 'bento', name: '川椒鸡翅 + 西红柿鸡蛋', price: 18.99, spicy: true, kcal: 850, desc: 'Chicken Wings, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.', imageUrl: './images/川椒鸡翅.png' },
+      { id: 5, category: 'bento', name: '尖椒肥肠 + 西红柿鸡蛋', price: 16.99, spicy: true, kcal: 820, desc: 'Pork Intestine, Green & Red Chili Peppers, Tomatoes & Eggs, Rice, etc.', imageUrl: './images/尖椒肥肠.png' },
+      { id: 6, category: 'bento', name: '酸豆角炒肉末 + 西红柿鸡蛋', price: 17.99, spicy: true, kcal: 738, desc: 'Minced Pork, Pickled Green Beans, Tomatoes & Eggs, Rice, etc.', imageUrl: './images/酸豆角肉沫.png' },
+      { id: 7, category: 'bento', name: '照烧肥牛 + 西红柿鸡蛋', price: 17.99, spicy: false, kcal: 845, desc: 'Teriyaki Beef + Tomatoes & Eggs, Rice, etc.', imageUrl: './images/金汤酸菜肥牛.png' },
+      { id: 8, category: 'bento', name: '肉食主义 + 西红柿鸡蛋', price: 18.99, spicy: true, kcal: 910, desc: 'Meat Balls, Pork Intestine, Spam, Beef Tripe, Tomatoes & Eggs, Rice, etc.', imageUrl: './images/麻婆豆腐.png' },
+      { id: 9, category: 'bento', name: '香辣四喜 + 西红柿鸡蛋', price: 18.99, spicy: true, kcal: 810, desc: 'Shrimp, Pork Rib, Beef Sirloin, Lamb Cube, Tomatoes & Eggs, Rice, etc.', imageUrl: './images/乌筍小炒肉.png' },
+      { id: 10, category: 'bento', name: '糖醋鱼柳 + 西红柿鸡蛋', price: 16.99, spicy: false, kcal: 750, desc: 'Fried Fish Fillet, Sweet & Sour Sauce, Tomatoes & Eggs, Rice, etc.', imageUrl: './images/鱼香茄子.png' },
+      { id: 11, category: 'bento', name: '麻婆豆腐 + 西红柿鸡蛋', price: 15.99, spicy: true, kcal: 719, desc: 'Minced Pork, Tofu, Red Chili Peppers, Tomatoes & Eggs, Rice, etc.', imageUrl: './images/麻婆豆腐.png' },
 
       // 🍲 金汤系列
-      {
-        id: 12,
-        category: 'golden',
-        name: '金汤酸菜鱼 + 米饭',
-        price: 18.49,
-        spicy: true,
-        kcal: 860,
-        desc: 'Fish Fillet, Enoki Mushroom, Glass Noodles, Golden Pickled Cabbage Soup, Rice, etc.',
-        imageUrl: './images/金汤酸菜鱼.png'
-      },
-      {
-        id: 13,
-        category: 'golden',
-        name: '金汤酸菜肥牛 + 米饭',
-        price: 18.49,
-        spicy: true,
-        kcal: 870,
-        desc: 'Beef Slices, Enoki Mushroom, Glass Noodles, Golden Pickled Cabbage Soup, Rice, etc.',
-        imageUrl: './images/金汤酸菜肥牛.png'
-      },
+      { id: 12, category: 'golden', name: '金汤酸菜鱼 + 米饭', price: 18.49, spicy: true, kcal: 860, desc: 'Fish Fillet, Enoki Mushroom, Glass Noodles, Golden Pickled Cabbage Soup, Rice, etc.', imageUrl: './images/金汤酸菜鱼.png' },
+      { id: 13, category: 'golden', name: '金汤酸菜肥牛 + 米饭', price: 18.49, spicy: true, kcal: 870, desc: 'Beef Slices, Enoki Mushroom, Glass Noodles, Golden Pickled Cabbage Soup, Rice, etc.', imageUrl: './images/金汤酸菜肥牛.png' },
 
       // 🍛 炒饭套餐
-      {
-        id: 14,
-        category: 'fried',
-        name: '咖喱牛肉炒饭 + 冬瓜虾仁汤',
-        price: 16.0,
-        spicy: false,
-        kcal: 854,
-        desc: 'Curry Beef Fried Rice + Winter Melon Shrimp Soup',
-        imageUrl: './images/乌筍小炒肉.png'
-      },
-      {
-        id: 15,
-        category: 'fried',
-        name: '那一年蛋炒饭 + 冬瓜虾仁汤',
-        price: 16.0,
-        spicy: false,
-        kcal: 754,
-        desc: 'Classic Fried Rice + Winter Melon Shrimp Soup',
-        imageUrl: './images/乌筍小炒肉.png'
-      },
+      { id: 14, category: 'fried', name: '咖喱牛肉炒饭 + 冬瓜虾仁汤', price: 16.0, spicy: false, kcal: 854, desc: 'Curry Beef Fried Rice + Winter Melon Shrimp Soup', imageUrl: './images/乌筍小炒肉.png' },
+      { id: 15, category: 'fried', name: '那一年蛋炒饭 + 冬瓜虾仁汤', price: 16.0, spicy: false, kcal: 754, desc: 'Classic Fried Rice + Winter Melon Shrimp Soup', imageUrl: './images/乌筍小炒肉.png' },
 
       // 🥗 小食 / 加购
-      {
-        id: 16,
-        category: 'side',
-        name: '凉拌土豆丝 + POP',
-        price: 3.0,
-        spicy: true,
-        kcal: 430,
-        desc: 'Shredded Potatoes, Chili Peppers, Green Onions, etc.',
-        imageUrl: './images/酸豆角炒肉末.png'
-      },
+      { id: 16, category: 'side', name: '凉拌土豆丝 + POP', price: 3.0, spicy: true, kcal: 430, desc: 'Shredded Potatoes, Chili Peppers, Green Onions, etc.', imageUrl: './images/酸豆角炒肉末.png' },
 
       // 🍲 汤类
-      {
-        id: 17,
-        category: 'soup',
-        name: '冬瓜虾仁汤（12oz）',
-        price: 3.99,
-        spicy: false,
-        kcal: 94,
-        desc: 'Winter Melon & Shrimp Soup',
-        imageUrl: './images/麻婆豆腐.png'
-      }
+      { id: 17, category: 'soup', name: '冬瓜虾仁汤（12oz）', price: 3.99, spicy: false, kcal: 94, desc: 'Winter Melon & Shrimp Soup', imageUrl: './images/麻婆豆腐.png' }
     ];
 
     // TODO: 改成你的真实 EMT 邮箱
     const EMT_EMAIL = "test@gmail.com";
-    // ✅ Google Apps Script 写入 Sheet 的地址
+    // ✅ 请确认此处填入的是 Apps Script 新部署的 Web App URL
     const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbyRiAS2BXhAupWlOeRlgbdYt-joop5dV1plhLvfVzM0DtLyNSxJ0_03tpx91bagar84/exec";
+    
     let hasSubmitted = false;
     let cart = [];
 
@@ -1093,226 +932,138 @@
       closeModal();
     });
 
-    // 提交订单
+    // 提交订单 - 最终修复版 (解决 CORS 和 漏写 fetch 的问题)
     submitBtn.addEventListener('click', function () {
-  errorMsg.style.display = 'none';
-  resultBox.style.display = 'none';
+      errorMsg.style.display = 'none';
+      resultBox.style.display = 'none';
 
-  if (hasSubmitted) {
-    showError('本页面已成功提交一份预订单，如需再次下单请刷新页面或重新打开链接。');
-    return;
-  }
+      if (hasSubmitted) {
+        showError('本页面已成功提交一份预订单，如需再次下单请刷新页面或重新打开链接。');
+        return;
+      }
 
-  const orderDate = document.getElementById('orderDate').value;
-  const pickupTime = document.getElementById('pickupTime').value;
-  const nickName = document.getElementById('customerName').value.trim();
-  const phone = document.getElementById('customerPhone').value.trim();
-  const wechatId = document.getElementById('wechatId').value.trim();
-  const remark = document.getElementById('remark').value.trim();
+      // 1. 数据收集
+      const orderDate = document.getElementById('orderDate').value;
+      const pickupTime = document.getElementById('pickupTime').value;
+      const nickName = document.getElementById('customerName').value.trim();
+      const phone = document.getElementById('customerPhone').value.trim();
+      const wechatId = document.getElementById('wechatId').value.trim();
+      const remark = document.getElementById('remark').value.trim();
 
-  if (!orderDate) {
-    return showError('请选择取餐日期');
-  }
+      // 2. 基础校验
+      if (!orderDate) { return showError('请选择取餐日期'); }
+      const todayStr = new Date().toISOString().slice(0, 10);
+      if (orderDate < todayStr) { return showError('取餐日期不能早于今天'); }
+      if (!nickName) { return showError('请填写昵称'); }
+      if (!wechatId) { return showError('请填写微信号，方便与客服沟通'); }
+      if (cart.length === 0) { return showError('购物车为空，请先添加至少一份菜品'); }
 
-  const todayStr = new Date().toISOString().slice(0,10);
-  if (orderDate < todayStr) {
-    return showError('取餐日期不能早于今天');
-  }
+      // 3. 计算总金额
+      let total = 0;
+      cart.forEach(item => {
+        total += item.price * item.quantity;
+      });
+      const totalAmount = total.toFixed(2);
 
-  if (!nickName) {
-    return showError('请填写昵称');
-  }
+      // 4. 生成订单号 (前端生成)
+      const dateStr = orderDate.replace(/-/g, '');
+      const key = 'orderCount_' + dateStr;
+      // 暂时读取，不增加，等成功后再增加
+      const currentCount = parseInt(localStorage.getItem(key) || '0', 10);
+      const nextSeq = currentCount + 1;
+      const seqStr = String(nextSeq).padStart(2, '0');
+      const orderNo = `${dateStr}-${seqStr}`;
 
-  if (!wechatId) {
-    return showError('请填写微信号，方便与客服沟通');
-  }
+      // 5. 组装菜品详情
+      let itemsDetailArray = [];
+      itemsSummaryEl.innerHTML = '';
+      cart.forEach(item => {
+        const dishInfo = menuItems.find(m => m.id === item.id);
+        const spicyText = dishInfo && dishInfo.spicy && item.spicyLevel
+          ? `（${item.spicyLevel}）` : '';
+        const itemStr = `${item.name}${spicyText} × ${item.quantity} = CAD $${(item.price * item.quantity).toFixed(2)}`;
+        itemsDetailArray.push(itemStr);
 
-  if (cart.length === 0) {
-    return showError('购物车为空，请先添加至少一份菜品');
-  }
+        // 填充页面上的订单摘要
+        const li = document.createElement('li');
+        li.textContent = itemStr;
+        itemsSummaryEl.appendChild(li);
+      });
+      const itemsDetail = itemsDetailArray.join('; ');
 
-  // 计算总金额
-  let total = 0;
-  cart.forEach(item => {
-    total += item.price * item.quantity;
-  });
+      // 6. 构建数据包
+      const payload = {
+        orderNo: orderNo,
+        orderDate: orderDate,
+        pickupTime: pickupTime,
+        nickName: nickName,
+        phone: phone,
+        wechatId: wechatId,
+        totalAmount: totalAmount,
+        itemsDetail: itemsDetail,
+        remark: remark
+      };
 
-  // 生成订单号（和之前一样）
-  const dateStr = orderDate.replace(/-/g, '');
-  const key = 'orderCount_' + dateStr;
-  const prevCount = parseInt(localStorage.getItem(key) || '0', 10);
-  const seq = prevCount + 1;
-  localStorage.setItem(key, seq.toString());
-  const seqStr = String(seq).padStart(2, '0');
-  const orderNo = `${dateStr}-${seqStr}`;
+      // 禁用按钮，防止重复点击
+      submitBtn.disabled = true;
+      submitBtn.textContent = '提交中...';
 
-  // 页面展示部分（和之前一样）
-  orderNoEl.textContent = orderNo;
-  orderNoForEmtEl.textContent = orderNo;
-  totalAmountEl.textContent = 'CAD $' + total.toFixed(2);
-  orderDateShowEl.textContent = orderDate;
-  if (pickupTime) {
-    pickupTimeShowWrapper.style.display = 'inline';
-    pickupTimeShowEl.textContent = pickupTime;
-  } else {
-    pickupTimeShowWrapper.style.display = 'none';
-  }
+      // 7. 发送请求 (关键修改: 使用 text/plain 绕过 OPTIONS 预检)
+      fetch(SHEET_API_URL, {
+        method: 'POST',
+        mode: 'cors', 
+        cache: 'no-cache',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8' // ✅ 欺骗浏览器是纯文本，避免跨域报错
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(response => response.json())
+      .then(result => {
+        if (result.result === "success") {
+          // --- 成功逻辑 ---
+          hasSubmitted = true;
+          // 只有成功了才更新本地计数器
+          localStorage.setItem(key, nextSeq.toString());
 
-  itemsSummaryEl.innerHTML = '';
-  cart.forEach(item => {
-    const dishInfo = menuItems.find(m => m.id === item.id);
-    const spicyText = dishInfo && dishInfo.spicy && item.spicyLevel
-      ? `（${item.spicyLevel}）` : '';
-    const li = document.createElement('li');
-    li.textContent = `${item.name}${spicyText} × ${item.quantity} = CAD $${(item.price * item.quantity).toFixed(2)}`;
-    itemsSummaryEl.appendChild(li);
-  });
-  if (remark) {
-    const li = document.createElement('li');
-    li.textContent = `备注：${remark}`;
-    itemsSummaryEl.appendChild(li);
-  }
+          // 填充成功界面数据
+          orderNoEl.textContent = orderNo;
+          orderNoForEmtEl.textContent = orderNo;
+          totalAmountEl.textContent = 'CAD $' + totalAmount;
+          orderDateShowEl.textContent = orderDate;
+          if (pickupTime) {
+            pickupTimeShowWrapper.style.display = 'inline';
+            pickupTimeShowEl.textContent = pickupTime;
+          } else {
+            pickupTimeShowWrapper.style.display = 'none';
+          }
 
-  resultBox.style.display = 'block';
+          // 显示结果，隐藏按钮
+          resultBox.style.display = 'block';
+          submitBtn.style.display = 'none';
+          
+          // 滚动到底部
+          resultBox.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          // 后端返回了 error 状态
+          throw new Error(result.message || '未知错误');
+        }
+      })
+      .catch(err => {
+        console.error('Submission Error:', err);
+        showError('提交失败，请检查网络或联系客服。错误信息: ' + err.message);
+        submitBtn.disabled = false;
+        submitBtn.textContent = '提交订单';
+      });
+    });
 
-  hasSubmitted = true;
-  submitBtn.disabled = true;
-  submitBtn.textContent = '已提交（如需再次下单请刷新页面）';
-
-  // 提交订单
-    submitBtn.addEventListener('click', async function () { // 确保函数是 async
-  errorMsg.style.display = 'none';
-  resultBox.style.display = 'none';
-
-  if (hasSubmitted) {
-    showError('本页面已成功提交一份预订单，如需再次下单请刷新页面或重新打开链接。');
-    return;
-  }
-
-  // --- 数据收集 ---
-  const orderDate = document.getElementById('orderDate').value;
-  const pickupTime = document.getElementById('pickupTime').value;
-  const nickName = document.getElementById('customerName').value.trim();
-  const phone = document.getElementById('customerPhone').value.trim();
-  const wechatId = document.getElementById('wechatId').value.trim();
-  const remark = document.getElementById('remark').value.trim();
-
-  // --- 基础校验 ---
-  if (!orderDate) { return showError('请选择取餐日期'); }
-  const todayStr = new Date().toISOString().slice(0,10);
-  if (orderDate < todayStr) { return showError('取餐日期不能早于今天'); }
-  if (!nickName) { return showError('请填写昵称'); }
-  if (!wechatId) { return showError('请填写微信号，方便与客服沟通'); }
-  if (cart.length === 0) { return showError('购物车为空，请先添加至少一份菜品'); }
-
-  // --- 计算总金额 ---
-  let total = 0;
-  cart.forEach(item => {
-    total += item.price * item.quantity;
-  });
-  const totalAmount = total.toFixed(2);
-
-  // --- 生成订单号（和你的旧逻辑保持一致）---
-  const dateStr = orderDate.replace(/-/g, '');
-  const key = 'orderCount_' + dateStr;
-  const prevCount = parseInt(localStorage.getItem(key) || '0', 10);
-  const seq = prevCount + 1;
-  // ⚠️ 注意: 只有在 Apps Script 返回成功后，才更新 localStorage。
-  // 暂时不更新 localStorage，在提交成功后再更新。
-  const seqStr = String(seq).padStart(2, '0');
-  const orderNo = `${dateStr}-${seqStr}`;
-  
-  // --- 组装菜品详情和总览列表 ---
-  let itemsDetailArray = [];
-  itemsSummaryEl.innerHTML = '';
-  cart.forEach(item => {
-    const dishInfo = menuItems.find(m => m.id === item.id);
-    const spicyText = dishInfo && dishInfo.spicy && item.spicyLevel
-      ? `（${item.spicyLevel}）` : '';
-    
-    const itemStr = `${item.name}${spicyText} × ${item.quantity} = CAD $${(item.price * item.quantity).toFixed(2)}`;
-    itemsDetailArray.push(itemStr);
-
-    // 填充页面上的订单摘要列表
-    const li = document.createElement('li');
-    li.textContent = itemStr;
-    itemsSummaryEl.appendChild(li);
-  });
-  const itemsDetail = itemsDetailArray.join('; '); // 用分号分隔，方便 Sheet 单元格阅读
-  
-  // --- 构建要发送给 Apps Script 的数据 ---
-  const payload = {
-    orderNo: orderNo,
-    orderDate: orderDate,
-    pickupTime: pickupTime,
-    nickName: nickName,
-    phone: phone,
-    wechatId: wechatId,
-    totalAmount: totalAmount,
-    itemsDetail: itemsDetail,
-    remark: remark
-  };
-  
-  // 禁用按钮并显示加载状态
-  submitBtn.disabled = true;
-  submitBtn.textContent = '提交中...';
-  
-  try {
-    // --- 发送 POST 请求到 Google Apps Script ---
-    const response = await fetch(SHEET_API_URL, {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    });
-  
-    const result = await response.json();
-  
-    if (result.result === "success") {
-      // 成功后执行：
-      hasSubmitted = true;
-      // 更新本地订单计数器
-      localStorage.setItem(key, seq.toString()); 
-
-      // 页面展示部分
-      orderNoEl.textContent = result.orderNo; // 使用 Apps Script 返回的订单号（虽然我们自己生成的）
-      orderNoForEmtEl.textContent = result.orderNo;
-      totalAmountEl.textContent = 'CAD $' + totalAmount;
-      orderDateShowEl.textContent = orderDate;
-      if (pickupTime) {
-        pickupTimeShowWrapper.style.display = 'inline';
-        pickupTimeShowEl.textContent = pickupTime;
-      } else {
-        pickupTimeShowWrapper.style.display = 'none';
-      }
-      
-      resultBox.style.display = 'block';
-      submitBtn.style.display = 'none'; // 成功后隐藏提交按钮
-    } else {
-      // Apps Script 返回了错误信息
-      showError('订单提交失败：' + (result.message || '未知错误'));
-      submitBtn.disabled = false;
-      submitBtn.textContent = '提交订单';
-    }
-  
-  } catch (err) {
-    console.error('网络请求错误:', err);
-    showError('订单提交失败：无法连接服务器或网络错误。');
-    submitBtn.disabled = false;
-    submitBtn.textContent = '提交订单';
-  }
-
-  function showError(message) {
-    errorMsg.textContent = message;
-    errorMsg.style.display = 'block';
-  }
-  });
-
-
-
+    function showError(msg) {
+      errorMsg.textContent = msg;
+      errorMsg.style.display = 'block';
+    }
+  </script>
+</body>
+</html>
 
 
 
