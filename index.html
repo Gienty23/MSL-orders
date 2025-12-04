@@ -1119,14 +1119,35 @@
     modalQtyInput.value = 1;
     modalQtyInput.disabled = false;
 
-    // 辣度行
-    if (dish.spicy) {
-      modalSpicyRow.style.display = 'flex';
-      modalSpicySelect.value = '正常辣';
-    } else {
-      modalSpicyRow.style.display = 'none';
-      modalSpicySelect.value = '';
+    // 辣度行（部分菜品不能选“不辣”）
+if (dish.spicy) {
+  modalSpicyRow.style.display = 'flex';
+
+  // 这些菜只能 正常辣 / 加辣
+  const noMildDishIds = [1, 5, 6, 11];
+
+  // 先清空原来的选项
+  modalSpicySelect.innerHTML = '';
+
+  // 根据菜品 ID 决定辣度选项
+  const options = noMildDishIds.includes(dish.id)
+    ? ['正常辣', '加辣']          // 这几道不能选“不辣”
+    : ['不辣', '正常辣', '加辣'];  // 其他菜保持原来的三档
+
+  options.forEach(text => {
+    const opt = document.createElement('option');
+    opt.value = text;
+    opt.textContent = text;
+    if (text === '正常辣') {
+      opt.selected = true;
     }
+    modalSpicySelect.appendChild(opt);
+  });
+
+} else {
+  modalSpicyRow.style.display = 'none';
+  modalSpicySelect.innerHTML = '';
+}
 
     // 饮料行
     if (dish.requiresDrink) {
@@ -1425,5 +1446,6 @@
 </script>
 </body>
 </html>
+
 
 
