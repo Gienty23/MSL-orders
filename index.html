@@ -753,7 +753,8 @@
   // 允许的取餐星期几：0=周日,1=周一,...,6=周六
   // 目前仅开放周六，将来要加周日，改成 [6, 0] 即可
   const ALLOWED_WEEKDAYS = [6];
-
+  const EXTRA_ALLOWED_DATES = ['2025-12-07'];
+  
   // 给后端用的 pickupTime 字段（前端不展示）
   // 以后你想固定某个时间可以直接改这里，比如 '18:00'
   const PICKUP_TIME_DEFAULT = '';
@@ -1446,6 +1447,7 @@ if (dish.spicy) {
 </script>
 </body>
 </html>
+
 
 
 
