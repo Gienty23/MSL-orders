@@ -792,7 +792,7 @@
     {
       id: 2,
       category: 'bento',
-      name: '宫保鸡丁 + 西红柿鸡蛋',
+      name: '宫保鸡丁 (含花生） + 西红柿鸡蛋',
       price: 16.99,
       spicy: true,
       kcal: 815,
@@ -1203,10 +1203,15 @@ if (dish.spicy) {
     }
 
     let spicyLevel = '';
-    if (dish.spicy) {
-      spicyLevel = modalSpicySelect.value || '正常辣';
-    }
+if (dish.spicy) {
+  spicyLevel = modalSpicySelect.value;
 
+  // 如果没选辣度，直接提示并拦截
+  if (!spicyLevel) {
+    alert('请先选择辣度~');
+    return;
+  }
+}
     let drink = '';
     if (dish.requiresDrink) {
       drink = modalDrinkSelect.value || DRINK_OPTIONS[0];
@@ -1446,6 +1451,7 @@ if (dish.spicy) {
 </script>
 </body>
 </html>
+
 
 
 
