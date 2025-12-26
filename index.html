@@ -770,12 +770,12 @@
     {
       id: 18,
       category: 'promo',
-      name: '敬请期待',
+      name: '香辣鸡脆骨（活动赠送）',
       price: 0.0,
-      spicy: false,
+      spicy: true,
       kcal: 0,
-      desc: '敬请期待',
-      imageUrl: './images/期待.jpg',
+      desc: '🔥 活动赠送｜每单限 1 份｜订单满 CAD $40 ',
+      imageUrl: './images/鸡脆骨活动.jpg',
       requiresDrink: false
     },
 
@@ -1218,12 +1218,18 @@ if (dish.spicy) {
       drink = modalDrinkSelect.value || DRINK_OPTIONS[0];
     }
 
-    // 检查购物车里是否已经有免费赠饮
+    // 检查购物车里是否已经满40
     if (dish.category === 'promo') {
-      const hasPromo = cart.some(item => item.category === 'promo');
-      if (hasPromo) {
-        alert('每单仅限领取 1 杯免费赠饮。');
-        return;
+  let subtotal = 0;
+  cart.forEach(item => {
+    if (item.category !== 'promo') {
+      subtotal += item.price * item.quantity;
+    }
+    });
+
+  if (subtotal < 40) {
+    alert('订单满 CAD $40 才可获赠鸡脆骨一份。');
+    return;
       }
     }
 
@@ -1452,6 +1458,7 @@ if (dish.spicy) {
 </script>
 </body>
 </html>
+
 
 
 
